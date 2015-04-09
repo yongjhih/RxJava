@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>RxJava</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="stylesheets/base.css">
+    <link rel="stylesheet" href="stylesheets/skeleton.css">
+    <link rel="stylesheet" href="stylesheets/layout.css">
+    <link rel="stylesheet" href="stylesheets/docs.css">
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+</head>
+<body>
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+            <h3 id="logo"><a href="/">RxJava</a></h3>
+                <ul id="navi">
+                    
+                        <li><a href="#see_also:">see also:</a></li>
+                    
+                        <li><a href="#appendix:_similar_blocking_and_non_blocking_operators">Appendix: similar blocking and non-blocking operators</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+        <div class="twelve columns offset-by-three content">
+            <header>
+                <h1><a href="/">RxJava</a></h1>
+                <div id="social">
+                    <a href="http://twitter.com/share" class="twitter-share-button" data-text="RxJava" data-count="horizontal">Tweet</a>
+                    <a href="http://yongjhih.github.io/RxJava/Blocking-Observable-Operators/_edit" class="button">Edit</a>
+                </div>
+            </header>
+            <div>
+                <p><p>This section explains the <a href="http://reactivex.io/RxJava/javadoc/rx/observables/BlockingObservable.html"><code>BlockingObservable</code></a> subclass. A Blocking Observable extends the ordinary Observable class by providing a set of operators on the items emitted by the Observable that block.</p>
+<p>To transform an <code>Observable</code> into a <code>BlockingObservable</code>, use the <a href="http://reactivex.io/RxJava/javadoc/rx/Observable.html#toBlocking("><code>Observable.toBlocking( )</code></a>) method or the <a href="http://reactivex.io/RxJava/javadoc/rx/observables/BlockingObservable.html#from(rx.Observable"><code>BlockingObservable.from( )</code></a>) method.</p></p>
+<ul>
+<li><p><a href="http://reactivex.io/documentation/operators/subscribe.html"><strong><code>forEach( )</code></strong></a> — invoke a function on each item emitted by the Observable; block until the Observable completes</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/first.html"><strong><code>first( )</code></strong></a> — block until the Observable emits an item, then return the first item emitted by the Observable</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/first.html"><strong><code>firstOrDefault( )</code></strong></a> — block until the Observable emits an item or completes, then return the first item emitted by the Observable or a default item if the Observable did not emit an item</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/last.html"><strong><code>last( )</code></strong></a> — block until the Observable completes, then return the last item emitted by the Observable</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/last.html"><strong><code>lastOrDefault( )</code></strong></a> — block until the Observable completes, then return the last item emitted by the Observable or a default item if there is no last item</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/first.html"><strong><code>mostRecent( )</code></strong></a> — returns an iterable that always returns the item most recently emitted by the Observable</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/takelast.html"><strong><code>next( )</code></strong></a> — returns an iterable that blocks until the Observable emits another item, then returns that item</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/first.html"><strong><code>latest( )</code></strong></a> — returns an iterable that blocks until or unless the Observable emits an item that has not been returned by the iterable, then returns that item</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/first.html"><strong><code>single( )</code></strong></a> — if the Observable completes after emitting a single item, return that item, otherwise throw an exception</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/first.html"><strong><code>singleOrDefault( )</code></strong></a> — if the Observable completes after emitting a single item, return that item, otherwise return a default item</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/to.html"><strong><code>toFuture( )</code></strong></a> — convert the Observable into a Future</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/to.html"><strong><code>toIterable( )</code></strong></a> — convert the sequence emitted by the Observable into an Iterable</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/to.html"><strong><code>getIterator( )</code></strong></a> — convert the sequence emitted by the Observable into an Iterator</p></li>
+</ul>
+<blockquote>
+<p><p>This documentation accompanies its explanations with a modified form of &quot;marble diagrams.&quot; Here is how these marble diagrams represent Blocking Observables:</p></p>
+</blockquote>
+<p><p><img src="/ReactiveX/RxJava/wiki/images/rx-operators/B.legend.png" width="640" height="301" /></p></p>
+<h4 id="see_also:">see also:</h4><ul>
+<li><p>javadoc: <a href="http://reactivex.io/RxJava/javadoc/rx/observables/BlockingObservable.html"><code>BlockingObservable</code></a></p></li>
+<li><p>javadoc: <a href="http://reactivex.io/RxJava/javadoc/rx/Observable.html#toBlocking()"><code>toBlocking()</code></a></p></li>
+<li><p>javadoc: <a href="http://reactivex.io/RxJava/javadoc/rx/observables/BlockingObservable.html#from(rx.Observable)"><code>BlockingObservable.from()</code></a></p></li>
+</ul>
+<h2 id="appendix:_similar_blocking_and_non_blocking_operators">Appendix: similar blocking and non-blocking operators</h2><table>
+ <thead>
+  <tr><th rowspan="2">operator</th><th colspan="3">result when it acts on</th><th rowspan="2">equivalent in Rx.NET</th></tr>
+  <tr><th>Observable that emits multiple items</th><th>Observable that emits one item</th><th>Observable that emits no items</th></tr>
+ </thead>
+ <tbody>
+  <tr><td><code>Observable.first</code></td><td>the first item</td><td>the single item</td><td><i>NoSuchElement</i></td><td><code>firstAsync</code></td></tr>
+  <tr><td><code>BlockingObservable.first</code></td><td>the first item</td><td>the single item</td><td><i>NoSuchElement</i></td><td><code>first</code></td></tr>
+  <tr><td><code>Observable.firstOrDefault</code></td><td>the first item</td><td>the single item</td><td>the default item</td><td><code>firstOrDefaultAsync</code></td></tr>
+  <tr><td><code>BlockingObservable.firstOrDefault</code></td><td>the first item</td><td>the single item</td><td>the default item</td><td><code>firstOrDefault</code></td></tr>
+  <tr><td><code>Observable.last</code></td><td>the last item</td><td>the single item</td><td><i>NoSuchElement</i></td><td><code>lastAsync</code></td></tr>
+  <tr><td><code>BlockingObservable.last</code></td><td>the last item</td><td>the single item</td><td><i>NoSuchElement</i></td><td><code>last</code></td></tr>
+  <tr><td><code>Observable.lastOrDefault</code></td><td>the last item</td><td>the single item</td><td>the default item</td><td><code>lastOrDefaultAsync</code></td></tr>
+  <tr><td><code>BlockingObservable.lastOrDefault</code></td><td>the last item</td><td>the single item</td><td>the default item</td><td><code>lastOrDefault</code></td></tr>
+  <tr><td><code>Observable.single</code></td><td><i>Illegal Argument</i></td><td>the single item</td><td><i>NoSuchElement</i></td><td><code>singleAsync</code></td></tr>
+  <tr><td><code>BlockingObservable.single</code></td><td><i>Illegal Argument</i></td><td>the single item</td><td><i>NoSuchElement</i></td><td><code>single</code></td></tr>
+  <tr><td><code>Observable.singleOrDefault</code></td><td><i>Illegal Argument</i></td><td>the single item</td><td>the default item</td><td><code>singleOrDefaultAsync</code></td></tr>
+  <tr><td><code>BlockingObservable.singleOrDefault</code></td><td><i>Illegal Argument</i></td><td>the single item</td><td>the default item</td><td><code>singleOrDefault</code></td></tr>
+ </tbody>
+</table>
+            </div>
+        </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+</body>
+</html>

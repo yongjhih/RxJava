@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>RxJava</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="stylesheets/base.css">
+    <link rel="stylesheet" href="stylesheets/skeleton.css">
+    <link rel="stylesheet" href="stylesheets/layout.css">
+    <link rel="stylesheet" href="stylesheets/docs.css">
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+</head>
+<body>
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+            <h3 id="logo"><a href="/">RxJava</a></h3>
+                <ul id="navi">
+                    
+                </ul>
+            </nav>
+        </div>
+        <div class="twelve columns offset-by-three content">
+            <header>
+                <h1><a href="/">RxJava</a></h1>
+                <div id="social">
+                    <a href="http://twitter.com/share" class="twitter-share-button" data-text="RxJava" data-count="horizontal">Tweet</a>
+                    <a href="http://yongjhih.github.io/RxJava/Combining-Observables/_edit" class="button">Edit</a>
+                </div>
+            </header>
+            <div>
+                <p><p>This section explains operators you can use to combine multiple Observables.</p></p>
+<ul>
+<li><p><a href="http://reactivex.io/documentation/operators/startwith.html"><strong><code>startWith( )</code></strong></a> — emit a specified sequence of items before beginning to emit the items from the Observable</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/merge.html"><strong><code>merge( )</code></strong></a> — combine multiple Observables into one</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/merge.html"><strong><code>mergeDelayError( )</code></strong></a> — combine multiple Observables into one, allowing error-free Observables to continue before propagating errors</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/zip.html"><strong><code>zip( )</code></strong></a> — combine sets of items emitted by two or more Observables together via a specified function and emit items based on the results of this function</p></li>
+<li><p>(<code>rxjava-joins</code>) <a href="http://reactivex.io/documentation/operators/and-then-when.html"><strong><code>and( )</code>, <code>then( )</code>, and <code>when( )</code></strong></a> — combine sets of items emitted by two or more Observables by means of <code>Pattern</code> and <code>Plan</code> intermediaries</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/combinelatest.html"><strong><code>combineLatest( )</code></strong></a> — when an item is emitted by either of two Observables, combine the latest item emitted by each Observable via a specified function and emit items based on the results of this function</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/join.html"><strong><code>join( )</code> and <code>groupJoin( )</code></strong></a> — combine the items emitted by two Observables whenever one item from one Observable falls within a window of duration specified by an item emitted by the other Observable</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/switch.html"><strong><code>switchOnNext( )</code></strong></a> — convert an Observable that emits Observables into a single Observable that emits the items emitted by the most-recently emitted of those Observables</p></li>
+</ul>
+<blockquote>
+<p><p>(<code>rxjava-joins</code>) — indicates that this operator is currently part of the optional <code>rxjava-joins</code> package under <code>rxjava-contrib</code> and is not included with the standard RxJava set of operators</p></p>
+</blockquote>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+</body>
+</html>

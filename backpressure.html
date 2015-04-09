@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>RxJava</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="stylesheets/base.css">
+    <link rel="stylesheet" href="stylesheets/skeleton.css">
+    <link rel="stylesheet" href="stylesheets/layout.css">
+    <link rel="stylesheet" href="stylesheets/docs.css">
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+</head>
+<body>
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+            <h3 id="logo"><a href="/">RxJava</a></h3>
+                <ul id="navi">
+                    
+                        <li><a href="#introduction">Introduction</a></li>
+                    
+                        <li><a href="#hot_and_cold_observables,_and_multicasted_observables">Hot and cold Observables, and multicasted Observables</a></li>
+                    
+                        <li><a href="#useful_operators_that_avoid_the_need_for_backpressure">Useful operators that avoid the need for backpressure</a></li>
+                    
+                        <li><a href="#throttling">Throttling</a></li>
+                    
+                        <li><a href="#sample_(or_throttlelast)">sample (or throttleLast)</a></li>
+                    
+                        <li><a href="#throttlefirst">throttleFirst</a></li>
+                    
+                        <li><a href="#debounce_(or_throttlewithtimeout)">debounce (or throttleWithTimeout)</a></li>
+                    
+                        <li><a href="#buffers_and_windows">Buffers and windows</a></li>
+                    
+                        <li><a href="#buffer">buffer</a></li>
+                    
+                        <li><a href="#window">window</a></li>
+                    
+                        <li><a href="#callstack_blocking_as_a_flow_control_alternative_to_backpressure">Callstack blocking as a flow-control alternative to backpressure</a></li>
+                    
+                        <li><a href="#how_a_subscriber_establishes_&amp;ldquo;reactive_pull&amp;rdquo;_backpressure">How a subscriber establishes &amp;ldquo;reactive pull&amp;rdquo; backpressure</a></li>
+                    
+                        <li><a href="#reactive_pull_backpressure_isn’t_magic">Reactive pull backpressure isn’t magic</a></li>
+                    
+                        <li><a href="#see_also">See also</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+        <div class="twelve columns offset-by-three content">
+            <header>
+                <h1><a href="/">RxJava</a></h1>
+                <div id="social">
+                    <a href="http://twitter.com/share" class="twitter-share-button" data-text="RxJava" data-count="horizontal">Tweet</a>
+                    <a href="http://yongjhih.github.io/RxJava/Backpressure/_edit" class="button">Edit</a>
+                </div>
+            </header>
+            <div>
+                <h1 id="introduction">Introduction</h1><p><p>In RxJava it is not difficult to get into a situation in which an Observable is emitting items more rapidly than an operator or subscriber can consume them. This presents the problem of what to do with such a growing backlog of unconsumed items. </p>
+<p>For example, imagine using the <a href="http://reactivex.io/documentations/operators/zip.html"><code>zip</code></a> operator to zip together two infinite Observables, one of which emits items twice as frequently as the other. A naive implementation of the <code>zip</code> operator would have to maintain an ever-expanding buffer of items emitted by the faster Observable to eventually combine with items emitted by the slower one. This could cause RxJava to seize an unwieldy amount of system resources.</p>
+<p>There are a variety of strategies with which you can exercise flow control and backpressure in RxJava in order to alleviate the problems caused when a quickly-producing Observable meets a slow-consuming observer. This page explains some of these strategies, and also shows you how you can design your own Observables and Observable operators to respect requests for flow control.</p></p>
+<h2 id="hot_and_cold_observables,_and_multicasted_observables">Hot and cold Observables, and multicasted Observables</h2><p><p>A <em>cold</em> Observable emits a particular sequence of items, but can begin emitting this sequence when its Observer finds it to be convenient, and at whatever rate the Observer desires, without disrupting the integrity of the sequence. For example if you convert a static Iterable into an Observable, that Observable will emit the same sequence of items no matter when it is later subscribed to or how frequently those items are observed. Examples of items emitted by a cold Observable might include the results of a database query, file retrieval, or web request.</p>
+<p>A <em>hot</em> Observable begins generating items to emit immediately when it is created. Subscribers typically begin observing the sequence of items emitted by a hot Observable from somewhere in the middle of the sequence, beginning with the first item emitted by the Observable subsequent to the establishment of the subscription. Such an Observable emits items at its own pace, and it is up to its observers to keep up. Examples of items emitted by a hot Observable might include mouse &amp; keyboard events, system events, or stock prices.</p>
+<p>When a cold Observable is <em>multicast</em> (when it is converted into a <code>ConnectableObservable</code> and its <a href="http://reactivex.io/documentations/operators/connect.html"><code>connect()</code></a> method is called), it effectively becomes <em>hot</em> and for the purposes of backpressure and flow-control it should be treated as a hot Observable.</p>
+<p>Cold Observables are ideal for the reactive pull model of backpressure described below. Hot Observables typically do not cope well with a reactive pull model, and are better candidates for some of the other flow control strategies discussed on this page, such as the use of <a href="http://reactivex.io/documentations/operators/backpressure.html">the <code>onBackpressureBuffer</code> or <code>onBackpressureDrop</code> operators</a>, throttling, buffers, or windows.</p></p>
+<h1 id="useful_operators_that_avoid_the_need_for_backpressure">Useful operators that avoid the need for backpressure</h1><p><p>Your first line of defense against the problems of over-producing Observables is to use some of the ordinary set of Observable operators to reduce the number of emitted items to a more manageable number. The examples in this section will show how you might use such operators to handle a bursty Observable like the one illustrated in the following marble diagram:</p>
+<p><img src="/ReactiveX/RxJava/wiki/images/rx-operators/bp.bursty.png" width="640" height="35" />​</p>
+<p>By fine-tuning the parameters to these operators you can ensure that a slow-consuming observer is not overwhelmed by a fast-producing Observable.</p></p>
+<h2 id="throttling">Throttling</h2><p><p>Operators like <a href="http://reactivex.io/documentations/operators/sample.html"><code>sample( )</code> or <code>throttleLast( )</code></a>, <a href="http://reactivex.io/documentations/operators/sample.html"><code>throttleFirst( )</code></a>, and <a href="http://reactivex.io/documentations/operators/debounce.html"><code>throttleWithTimeout( )</code> or <code>debounce( )</code></a> allow you to regulate the rate at which an Observable emits items.</p>
+<p>The following diagrams show how you could use each of these operators on the bursty Observable shown above.</p></p>
+<h3 id="sample_(or_throttlelast)">sample (or throttleLast)</h3><p><p>The <code>sample</code> operator periodically &quot;dips&quot; into the sequence and emits only the most recently emitted item during each dip:</p>
+<p><img src="/ReactiveX/RxJava/wiki/images/rx-operators/bp.sample.png" width="640" height="260" />​</p></p>
+<pre><code class="lang-groovy">Observable&lt;Integer&gt; burstySampled = bursty<span class="preprocessor">.sample</span>(<span class="number">500</span>, TimeUnit<span class="preprocessor">.MILLISECONDS</span>)<span class="comment">;</span>
+</code></pre>
+<h3 id="throttlefirst">throttleFirst</h3><p><p>The <code>throttleFirst</code> operator is similar, but emits not the most recently emitted item, but the first item that was emitted after the previous &quot;dip&quot;:</p>
+<p><img src="/ReactiveX/RxJava/wiki/images/rx-operators/bp.throttleFirst.png" width="640" height="260" />​</p></p>
+<pre><code class="lang-groovy">Observable&lt;Integer&gt; burstyThrottled = bursty<span class="preprocessor">.throttleFirst</span>(<span class="number">500</span>, TimeUnit<span class="preprocessor">.MILLISECONDS</span>)<span class="comment">;</span>
+</code></pre>
+<h3 id="debounce_(or_throttlewithtimeout)">debounce (or throttleWithTimeout)</h3><p><p>The <code>debounce</code> operator emits only those items from the source Observable that are not followed by another item within a specified duration:</p>
+<p><img src="/ReactiveX/RxJava/wiki/images/rx-operators/bp.debounce.png" width="640" height="240" />​</p></p>
+<pre><code class="lang-groovy">Observable&lt;Integer&gt; burstyDebounced = bursty<span class="preprocessor">.debounce</span>(<span class="number">10</span>, TimeUnit<span class="preprocessor">.MILLISECONDS</span>)<span class="comment">;</span>
+</code></pre>
+<h2 id="buffers_and_windows">Buffers and windows</h2><p><p>You can also use an operator like <a href="http://reactivex.io/documentations/operators/buffer.html"><code>buffer( )</code></a> or <a href="http://reactivex.io/documentations/operators/window.html"><code>window( )</code></a> to collect items from the over-producing Observable and then emit them, less-frequently, as collections (or Observables) of items. The slow consumer can then decide whether to process only one particular item from each collection, to process some combination of those items, or to schedule work to be done on each item in the collection, as appropriate.</p>
+<p>The following diagrams show how you could use each of these operators on the bursty Observable shown above.</p></p>
+<h3 id="buffer">buffer</h3><p><p>You could, for example, close and emit a buffer of items from the bursty Observable periodically, at a regular interval of time:</p>
+<p><img src="/ReactiveX/RxJava/wiki/images/rx-operators/bp.buffer2.png" width="640" height="270" />​</p></p>
+<pre><code class="lang-groovy">Observable&lt;List&lt;Integer&gt;&gt; burstyBuffered = bursty<span class="preprocessor">.buffer</span>(<span class="number">500</span>, TimeUnit<span class="preprocessor">.MILLISECONDS</span>)<span class="comment">;</span>
+</code></pre>
+<p><p>Or you could get fancy, and collect items in buffers during the bursty periods and emit them at the end of each burst, by using the <code>debounce</code> operator to emit a buffer closing indicator to the <code>buffer</code> operator:</p>
+<p><img src="/ReactiveX/RxJava/wiki/images/rx-operators/bp.buffer1.png" width="640" height="500" />​</p></p>
+<pre><code class="lang-groovy">// we have <span class="keyword">to</span> multicast the original bursty Observable so we can <span class="keyword">use</span> it
+// both as our source <span class="keyword">and</span> as the source <span class="keyword">for</span> our <span class="keyword">buffer</span> closing selector:
+Observable&lt;<span class="typename">Integer</span>&gt; burstyMulticast = bursty.publish().refCount();
+// burstyDebounced will be our <span class="keyword">buffer</span> closing selector:
+Observable&lt;<span class="typename">Integer</span>&gt; burstyDebounced = burstMulticast.debounce(<span class="number">10</span>, TimeUnit.MILLISECONDS);
+// <span class="keyword">and</span> this, finally, <span class="keyword">is</span> the Observable <span class="keyword">of</span> buffers we<span class="attribute">'re</span> interested <span class="keyword">in</span>:
+Observable&lt;List&lt;<span class="typename">Integer</span>&gt;&gt; burstyBuffered = burstyMulticast.<span class="keyword">buffer</span>(burstyDebounced);
+</code></pre>
+<h3 id="window">window</h3><p><p><code>window</code> is similar to <code>buffer</code>. One variant of <code>window</code> allows you to periodically emit Observable windows of items at a regular interval of time:</p>
+<p><img src="/ReactiveX/RxJava/wiki/images/rx-operators/bp.window1.png" width="640" height="325" />​</p></p>
+<pre><code class="lang-groovy">Observable&lt;Observable&lt;Integer&gt;&gt; burstyWindowed = bursty<span class="preprocessor">.window</span>(<span class="number">500</span>, TimeUnit<span class="preprocessor">.MILLISECONDS</span>)<span class="comment">;</span>
+</code></pre>
+<p><p>You could also choose to emit a new window each time you have collected a particular number of items from the source Observable:</p>
+<p><img src="/ReactiveX/RxJava/wiki/images/rx-operators/bp.window2.png" width="640" height="325" />​</p></p>
+<pre><code class="lang-groovy">Observable&lt;Observable&lt;Integer&gt;&gt; burstyWindowed = bursty<span class="preprocessor">.window</span>(<span class="number">5</span>)<span class="comment">;</span>
+</code></pre>
+<h1 id="callstack_blocking_as_a_flow_control_alternative_to_backpressure">Callstack blocking as a flow-control alternative to backpressure</h1><p><p>Another way of handling an overproductive Observable is to block the callstack (parking the thread that governs the overproductive Observable). This has the disadvantage of going against the “reactive” and non-blocking model of Rx. However this can be a viable option if the problematic Observable is on a thread that can be blocked safely. Currently RxJava does not expose any operators to facilitate this.</p>
+<p>If the Observable, all of the operators that operate on it, and the observer that is subscribed to it, are all operating in the same thread, this effectively establishes a form of backpressure by means of callstack blocking. But be aware that many Observable operators do operate in distinct threads by default (the javadocs for those operators will indicate this).</p></p>
+<h1 id="how_a_subscriber_establishes_&ldquo;reactive_pull&rdquo;_backpressure">How a subscriber establishes &ldquo;reactive pull&rdquo; backpressure</h1><p><p>When you subscribe to an <code>Observable</code> with a <code>Subscriber</code>, you can request reactive pull backpressure by calling <code>Subscriber.request(n)</code> in the <code>Subscriber</code>&#8217;s <code>onStart()</code> method (where <em>n</em> is the maximum number of items you want the <code>Observable</code> to emit before the next <code>request()</code> call).</p>
+<p>Then, after handling this item (or these items) in <code>onNext()</code>, you can call <code>request()</code> again to instruct the <code>Observable</code> to emit another item (or items).  Here is an example of a <code>Subscriber</code> that requests one item at a time from <code>someObservable</code>:</p></p>
+<pre><code class="lang-java">someObservable.subscribe(<span class="keyword">new</span> Subscriber&lt;t&gt;() {
+    <span class="annotation">@Override</span>
+    <span class="keyword">public</span> <span class="keyword">void</span> onStart() {
+      request(<span class="number">1</span>);
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">public</span> <span class="keyword">void</span> onCompleted() {
+      <span class="comment">// gracefully handle sequence-complete</span>
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">public</span> <span class="keyword">void</span> onError(Throwable e) {
+      <span class="comment">// gracefully handle error</span>
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">public</span> <span class="keyword">void</span> onNext(t n) {
+      <span class="comment">// do something with the emitted item "n"</span>
+      <span class="comment">// request another item:</span>
+      request(<span class="number">1</span>);
+    }
+});
+</code></pre>
+<p><p>You can pass a magic number to <code>request</code>, <code>request(Long.MAX_VALUE)</code>, to disable reactive pull backpressure and to ask the Observable to emit items at its own pace. <code>request(0)</code> is a legal call, but has no effect. Passing values less than zero to <code>request</code> will cause an exception to be thrown.</p></p>
+<h2 id="reactive_pull_backpressure_isn’t_magic">Reactive pull backpressure isn’t magic</h2><p><p>Backpressure doesn’t make the problem of an overproducing Observable or an underconsuming Subscriber go away. It just moves the problem up the chain of operators to a point where it can be handled better.</p>
+<p>Let’s take a closer look at the problem of the uneven <a href="http://reactivex.io/documentations/operators/zip.html"><code>zip</code></a>.</p>
+<p>You have two Observables, <em>A</em> and <em>B</em>, where <em>B</em> is inclined to emit items more frequently than <em>A</em>. When you try to <code>zip</code> these two Observables together, the <code>zip</code> operator combines item <em>n</em> from <em>A</em> and item <em>n</em> from <em>B</em>, but meanwhile <em>B</em> has also emitted items <em>n</em>+1 to <em>n</em>+<em>m</em>. The <code>zip</code> operator has to hold on to these items so it can combine them with items <em>n</em>+1 to <em>n</em>+<em>m</em> from <em>A</em> as they are emitted, but meanwhile <em>m</em> keeps growing and so the size of the buffer needed to hold on to these items keeps increasing.</p>
+<p>You could attach a throttling operator to <em>B</em>, but this would mean ignoring some of the items <em>B</em> emits, which might not be appropriate. What you’d really like to do is to signal to <em>B</em> that it needs to slow down and then let <em>B</em> decide how to do this in a way that maintains the integrity of its emissions.</p>
+<p>The reactive pull backpressure model lets you do this. It creates a sort of active pull from the Subscriber in contrast to the normal passive push Observable behavior.</p>
+<p>The <code>zip</code> operator as implemented in RxJava uses this technique. It maintains a small buffer of items for each source Observable, and it requests no more items from each source Observable than would fill its buffer. Each time <code>zip</code> emits an item, it removes the corresponding items from its buffers and requests exactly one more item from each of its source Observables.</p>
+<p>(Many RxJava operators exercise reactive pull backpressure. Some operators do not need to use this variety of backpressure, as they operate in the same thread as the Observable they operate on, and so they exert a form of blocking backpressure simply by not giving the Observable the opportunity to emit another item until they have finished processing the previous one. For other operators, backpressure is inappropriate as they have been explicitly designed to deal with flow control in other ways. The RxJava javadocs for those operators that are methods of the Observable class indicate which ones do not use reactive pull backpressure and why.)</p>
+<p>For this to work, though, Observables <em>A</em> and <em>B</em> must respond correctly to the <code>request()</code>.  If an Observable has not been written to support reactive pull backpressure (such support is not a requirement for Observables), you can apply one of the following operators to it, each of which forces a simple form of backpressure behavior:</p></p>
+<dl>
+ <dt><tt>onBackpressureBuffer</tt></dt>
+  <dd>maintains a buffer of all emissions from the source Observable and emits them to downstream Subscribers according to the <tt>request</tt>s they generate<br /><img src="/ReactiveX/RxJava/wiki/images/rx-operators/bp.obp.buffer.png" width="640" height="300" /><br />an experimental version of this operator (not available in RxJava 1.0) allows you to set the capacity of the buffer; applying this operator will cause the resulting Observable to terminate with an error if this buffer is overrun​</dd>
+ <dt><tt>onBackpressureDrop</tt></dt>
+  <dd>drops emissions from the source Observable unless there is a pending <tt>request</tt> from a downstream Subscriber, in which case it will emit enough items to fulfill the request<br /><img src="/ReactiveX/RxJava/wiki/images/rx-operators/bp.obp.drop.png" width="640" height="245" />​</dd>
+ <dt><tt>onBackpressureBlock</tt> <em style="color: #f00;">(experimental, not in RxJava 1.0)</em></dt>
+  <dd>blocks the thread on which the source Observable is operating until such time as a Subscriber issues a <tt>request</tt> for items, and then unblocks the thread only so long as there are pending requests<br /><img src="/ReactiveX/RxJava/wiki/images/rx-operators/bp.obp.block.png" width="640" height="245" /></dd>
+</dl>
+
+<p><p>If you do not apply any of these operators to an Observable that does not support backpressure, <em>and</em> if either you as the Subscriber or some operator between you and the Observable attempts to apply reactive pull backpressure, you will encounter a <code>MissingBackpressureException</code> which you will be notified of via your <code>onError()</code> callback.</p>
+<p><em><strong>Work in progress...</strong></em></p>
+<p>Things that may need explaining:</p></p>
+<ul>
+<li><p>the <code>Producer</code> interface (and its <code>request</code> method)</p></li>
+<li><p>other new method in <code>Subscriber</code>:</p><ul>
+<li><p><code>setProducer(p)</code></p></li>
+</ul>
+</li>
+<li><p>how and when to support producers in custom observables &amp; operators</p><ul>
+<li><p>point here from the &quot;how to make a custom operator&quot; page; maybe also from <code>create</code> operator doc</p></li>
+</ul>
+</li>
+</ul>
+<p><p><em><strong>Work in progress...</strong></em></p></p>
+<h1 id="see_also">See also</h1><ul>
+<li><p><a href="https://github.com/ReactiveX/RxJava/releases/tag/0.20.0-RC1">RxJava 0.20.0-RC1 release notes</a></p></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+</body>
+</html>

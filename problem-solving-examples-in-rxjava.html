@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>RxJava</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="stylesheets/base.css">
+    <link rel="stylesheet" href="stylesheets/skeleton.css">
+    <link rel="stylesheet" href="stylesheets/layout.css">
+    <link rel="stylesheet" href="stylesheets/docs.css">
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+</head>
+<body>
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+            <h3 id="logo"><a href="/">RxJava</a></h3>
+                <ul id="navi">
+                    
+                        <li><a href="#project_euler_problem_#1">Project Euler problem #1</a></li>
+                    
+                        <li><a href="#generate_the_fibonacci_sequence">Generate the Fibonacci Sequence</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+        <div class="twelve columns offset-by-three content">
+            <header>
+                <h1><a href="/">RxJava</a></h1>
+                <div id="social">
+                    <a href="http://twitter.com/share" class="twitter-share-button" data-text="RxJava" data-count="horizontal">Tweet</a>
+                    <a href="http://yongjhih.github.io/RxJava/Problem-Solving-Examples-in-RxJava/_edit" class="button">Edit</a>
+                </div>
+            </header>
+            <div>
+                <p><p>This page will present some elementary RxJava puzzles and walk through some solutions (using the Groovy language implementation of RxJava) as a way of introducing you to some of the RxJava operators.</p></p>
+<h1 id="project_euler_problem_#1">Project Euler problem #1</h1><p><p>There used to be a site called &quot;Project Euler&quot; that presented a series of mathematical computing conundrums (some fairly easy, others quite baffling) and challenged people to solve them. The first one was a sort of warm-up exercise:</p></p>
+<blockquote>
+<p><p>If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23. Find the sum of all the multiples of 3 or 5 below 1000.</p></p>
+</blockquote>
+<p><p>There are several ways we could go about this with RxJava.  We might, for instance, begin by going through all of the natural numbers below 1000 with <a href="Creating-Observables#range"><code>range</code></a> and then <a href="Filtering-Observables#filter"><code>filter</code></a> out those that are not a multiple either of 3 or of 5:</p></p>
+<pre><code class="lang-groovy"><span class="function"><span class="keyword">def</span> <span class="title">threesAndFives</span> </span>= <span class="constant">Observable</span>.range(<span class="number">1</span>,<span class="number">999</span>).filter({ !((it % <span class="number">3</span>) &amp;&amp; (it % <span class="number">5</span>)) });
+</code></pre>
+<p><p>Or, we could generate two Observable sequences, one containing the multiples of three and the other containing the multiples of five (by <a href="https://github.com/Netflix/RxJava/wiki/Transforming-Observables#map"><code>map</code></a>ping each value onto its appropriate multiple), making sure to only generating new multiples while they are less than 1000 (the <a href="Conditional-and-Boolean-Operators#takewhile-and-takewhilewithindex"><code>takeWhile</code></a> operator will help here), and then <a href="Combining-Observables#merge"><code>merge</code></a> these sets:</p></p>
+<pre><code class="lang-groovy">def threes = Observable<span class="preprocessor">.range</span>(<span class="number">1</span>,<span class="number">999</span>)<span class="preprocessor">.map</span>({it*<span class="number">3</span>})<span class="preprocessor">.takeWhile</span>({it&lt;<span class="number">1000</span>})<span class="comment">;</span>
+def fives = Observable<span class="preprocessor">.range</span>(<span class="number">1</span>,<span class="number">999</span>)<span class="preprocessor">.map</span>({it*<span class="number">5</span>})<span class="preprocessor">.takeWhile</span>({it&lt;<span class="number">1000</span>})<span class="comment">;</span>
+def threesAndFives = Observable<span class="preprocessor">.merge</span>(threes, fives)<span class="preprocessor">.distinct</span>()<span class="comment">;</span>
+</code></pre>
+<p><p>Don&#39;t forget the <a href="Filtering-Observables#distinct"><code>distinct</code></a> operator here, otherwise merge will duplicate numbers like 15 that are multiples of both 5 and 3.</p>
+<p>Next, we want to sum up the numbers in the resulting sequence. If you have installed the optional <code>rxjava-math</code> module, this is elementary: just use an operator like <a href="Mathematical-and-Aggregate-Operators#suminteger-sumlong-sumfloat-and-sumdouble"><code>sumInteger</code> or <code>sumLong</code></a> on the <code>threesAndFives</code> Observable. But what if you don&#39;t have this module? How could you use standard RxJava operators to sum up a sequence and emit that sum?</p>
+<p>There are a number of operators that reduce a sequence emitted by a source Observable to a single value emitted by the resulting Observable. Most of the ones that are not in the <code>rxjava-math</code> module emit boolean evaluations of the sequence; we want something that can emit a number. The <a href="Mathematical-and-Aggregate-Operators#reduce"><code>reduce</code></a> operator will do the job:</p></p>
+<pre><code class="lang-groovy"><span class="function"><span class="keyword">def</span> <span class="title">summer</span> </span>= threesAndFives.reduce(<span class="number">0</span>, { a, b -&gt; a+b });
+</code></pre>
+<p><p>Here is how <code>reduce</code> gets the job done. It starts with 0 as a seed. Then, with each item that <code>threesAndFives</code> emits, it calls the closure <code>{ a, b -&gt; a+b }</code>, passing it the current seed value as <code>a</code> and the emission as <code>b</code>. The closure adds these together and returns that sum, and <code>reduce</code> uses this returned value to overwrite its seed. When <code>threesAndFives</code> completes, <code>reduce</code> emits the final value returned from the closure as its sole emission:</p>
+<p><table></p><p> <thead></p><p>  <tr><th>iteration</th><th>seed</th><th>emission</th><th>reduce</th></tr></p><p> </thead></p><p> <tbody></p><p>  <tr><td>1</td><td>0</td><td>3</td><td>3</td></tr></p><p>  <tr><td>2</td><td>3</td><td>5</td><td>8</td></tr></p><p>  <tr><td>3</td><td>8</td><td>6</td><td>14</td></tr></p><p>  <tr><td colspan="4"><center>&hellip;</center></td></tr></p><p>  <tr><td>466</td><td>232169</td><td>999</td><td>233168</td></tr></p><p> </tbody></p><p></table></p><p>Finally, we want to see the result. This means we must <a href="Observable#onnext-oncompleted-and-onerror">subscribe</a> to the Observable we have constructed:</p></p>
+<pre><code class="lang-groovy">summer<span class="preprocessor">.subscribe</span>({println(it)<span class="comment">;});</span>
+</code></pre>
+<h1 id="generate_the_fibonacci_sequence">Generate the Fibonacci Sequence</h1><p><p>How could you create an Observable that emits <a href="http://en.wikipedia.org/wiki/Fibonacci_number">the Fibonacci sequence</a>?</p>
+<p>The most direct way would be to use the <a href="Creating-Observables#wiki-create"><code>create</code></a> operator to make an Observable &quot;from scratch,&quot; and then use a traditional loop within the closure you pass to that operator to generate the sequence. Something like this:</p></p>
+<pre><code class="lang-groovy">def fibonacci = Observable<span class="preprocessor">.create</span>({ observer -&gt;
+  def f1=<span class="number">0</span><span class="comment">; f2=1, f=1;</span>
+  while(!observer<span class="preprocessor">.isUnsubscribed</span>() {
+    observer<span class="preprocessor">.onNext</span>(f)<span class="comment">;</span>
+    f  = f1+f2<span class="comment">;</span>
+    f1 = f2<span class="comment">;</span>
+    f2 = f<span class="comment">;</span>
+  }<span class="comment">;</span>
+})<span class="comment">;</span>
+</code></pre>
+<p><p>But this is a little too much like ordinary linear programming. Is there some way we can instead create this sequence by composing together existing Observable operators?</p>
+<p>Here&#39;s an option that does this:</p></p>
+<pre><code>def fibonacci = <span class="transposed_variable">Observable.</span>from(<span class="number">0</span>).repeat().scan(<span class="matrix">[<span class="number">0</span>,<span class="number">1</span>]</span>, { a,b -&gt; <span class="matrix">[a[<span class="number">1</span>]</span>, a<span class="matrix">[<span class="number">0</span>]</span>+a<span class="matrix">[<span class="number">1</span>]</span>] }).map({it<span class="matrix">[<span class="number">1</span>]</span>});
+</code></pre><p><p>It&#39;s a little <a href="http://www.urbandictionary.com/define.php?term=janky">janky</a>. Let&#39;s walk through it:</p>
+<p>The <code>Observable.from(0).repeat()</code> creates an Observable that just emits a series of zeroes. This just serves as grist for the mill to keep <a href="Transforming-Observables#scan"><code>scan</code></a> operating. The way <code>scan</code> usually behaves is that it operates on the emissions from an Observable, one at a time, accumulating the result of operations on each emission in some sort of register, which it emits as its own emissions. The way we&#39;re using it here, it ignores the emissions from the source Observable entirely, and simply uses these emissions as an excuse to transform and emit its register. That register gets <code>[0,1]</code> as a seed, and with each iteration changes the register from <code>[a,b]</code> to <code>[b,a+b]</code> and then emits this register.</p>
+<p>This has the effect of emitting the following sequence of items: <code>[0,1], [1,1], [1,2], [2,3], [3,5], [5,8]...</code></p>
+<p>The second item in this array describes the Fibonacci sequence. We can use <code>map</code> to reduce the sequence to just that item.</p>
+<p>To print out a portion of this sequence (using either method), you would use code like the following:</p></p>
+<pre><code class="lang-groovy">fibonnaci<span class="preprocessor">.take</span>(<span class="number">15</span>)<span class="preprocessor">.subscribe</span>({println(it)})]<span class="comment">;</span>
+</code></pre>
+<p><p>Is there a less-janky way to do this? The <a href="https://github.com/Netflix/RxJava/wiki/Phantom-Operators#generate-and-generateabsolutetime"><code>generate</code></a> operator would avoid the silliness of creating an Observable that does nothing but turn the crank of <code>seed</code>, but this operator is not yet part of RxJava.  Perhaps you can think of a more elegant solution?</p></p>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+</body>
+</html>

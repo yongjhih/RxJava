@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>RxJava</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="stylesheets/base.css">
+    <link rel="stylesheet" href="stylesheets/skeleton.css">
+    <link rel="stylesheet" href="stylesheets/layout.css">
+    <link rel="stylesheet" href="stylesheets/docs.css">
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+</head>
+<body>
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+            <h3 id="logo"><a href="/">RxJava</a></h3>
+                <ul id="navi">
+                    
+                        <li><a href="#sequence_operators">Sequence Operators</a></li>
+                    
+                        <li><a href="#implementing_your_operator">Implementing Your Operator</a></li>
+                    
+                        <li><a href="#transformational_operators">Transformational Operators</a></li>
+                    
+                        <li><a href="#implementing_your_transformer">Implementing Your Transformer</a></li>
+                    
+                        <li><a href="#see_also">See also</a></li>
+                    
+                        <li><a href="#other_considerations">Other Considerations</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+        <div class="twelve columns offset-by-three content">
+            <header>
+                <h1><a href="/">RxJava</a></h1>
+                <div id="social">
+                    <a href="http://twitter.com/share" class="twitter-share-button" data-text="RxJava" data-count="horizontal">Tweet</a>
+                    <a href="http://yongjhih.github.io/RxJava/Implementing-Your-Own-Operators/_edit" class="button">Edit</a>
+                </div>
+            </header>
+            <div>
+                <p><p>You can implement your own Observable operators. This page shows you how.</p>
+<p>If your operator is designed to <em>originate</em> an Observable, rather than to transform or react to a source Observable, use the <a href="http://reactivex.io/documentations/operators/create.html"><code>create( )</code></a> method rather than trying to implement <code>Observable</code> manually.  Otherwise, you can create a custom operator by following the instructions on this page.</p>
+<p>If your operator is designed to act on the individual items emitted by a source Observable, follow the instructions under <a href="Implementing-Your-Own-Operators#sequence-operators"><em>Sequence Operators</em></a> below. If your operator is designed to transform the source Observable as a whole (for instance, by applying a particular set of existing RxJava operators to it) follow the instructions under <a href="Implementing-Your-Own-Operators#transformational-operators"><em>Transformational Operators</em></a> below.</p>
+<p>(<strong>Note:</strong> in Xtend, a Groovy-like language, you can implement your operators as <em>extension methods</em> and can thereby chain them directly without using the methods described on this page. See <a href="http://mnmlst-dvlpr.blogspot.de/2014/07/rxjava-and-xtend.html">RxJava and Xtend</a> for details.)</p></p>
+<h1 id="sequence_operators">Sequence Operators</h1><p><p>The following example shows how you can use the <code>lift( )</code> operator to chain your custom operator (in this example: <code>myOperator</code>) alongside standard RxJava operators like <code>ofType</code> and <code>map</code>:</p></p>
+<pre><code class="lang-groovy">fooObservable = barObservable<span class="preprocessor">.ofType</span>(Integer)<span class="preprocessor">.map</span>({it*<span class="number">2</span>})<span class="preprocessor">.lift</span>(new myOperator&lt;T&gt;())<span class="preprocessor">.map</span>({<span class="string">"transformed by myOperator: "</span> + it})<span class="comment">;</span>
+</code></pre>
+<p><p>The following section shows how you form the scaffolding of your operator so that it will work correctly with <code>lift( )</code>.</p></p>
+<h2 id="implementing_your_operator">Implementing Your Operator</h2><p><p>Define your operator as a public class that implements the <a href="http://reactivex.io/RxJava/javadoc/rx/Observable.Operator.html"><code>Operator</code></a> interface, like so:</p></p>
+<pre><code class="lang-java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">myOperator</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">Operator</span>&lt;<span class="title">T</span>&gt; </span>{
+  <span class="keyword">public</span> myOperator( <span class="comment">/* any necessary params here */</span> ) {
+    <span class="comment">/* any necessary initialization here */</span>
+  }
+
+  <span class="annotation">@Override</span>
+  <span class="keyword">public</span> Subscriber&lt;? <span class="keyword">super</span> T&gt; call(<span class="keyword">final</span> Subscriber&lt;? <span class="keyword">super</span> T&gt; s) {
+    <span class="keyword">return</span> <span class="keyword">new</span> Subscriber&lt;t&gt;(s) {
+      <span class="annotation">@Override</span>
+      <span class="keyword">public</span> <span class="keyword">void</span> onCompleted() {
+        <span class="comment">/* add your own onCompleted behavior here, or just pass the completed notification through: */</span>
+        <span class="keyword">if</span>(!s.isUnsubscribed()) {
+          s.onCompleted();
+        }
+      }
+
+      <span class="annotation">@Override</span>
+      <span class="keyword">public</span> <span class="keyword">void</span> onError(Throwable t) {
+        <span class="comment">/* add your own onError behavior here, or just pass the error notification through: */</span>
+        <span class="keyword">if</span>(!s.isUnsubscribed()) {
+          s.onError(t);
+        }
+      }
+
+      <span class="annotation">@Override</span>
+      <span class="keyword">public</span> <span class="keyword">void</span> onNext(T item) {
+        <span class="comment">/* this example performs some sort of operation on each incoming item and emits the results */</span>
+        <span class="keyword">if</span>(!s.isUnsubscribed()) {
+          transformedItem = myOperatorTransformOperation(item);
+          s.onNext(transformedItem);
+        }
+      }
+    };
+  }
+}
+</code></pre>
+<h1 id="transformational_operators">Transformational Operators</h1><p><p>The following example shows how you can use the <code>compose( )</code> operator to chain your custom operator (in this example, an operator called <code>myTransformer</code> that transforms an Observable that emits Integers into one that emits Strings) alongside standard RxJava operators like <code>ofType</code> and <code>map</code>:</p></p>
+<pre><code class="lang-groovy">fooObservable <span class="subst">=</span> barObservable<span class="built_in">.</span>ofType(<span class="built_in">Integer</span>)<span class="built_in">.</span><span class="built_in">map</span>({it<span class="subst">*</span><span class="number">2</span>})<span class="built_in">.</span>compose(<span class="literal">new</span> myTransformer<span class="subst">&lt;</span><span class="built_in">Integer</span>,<span class="built_in">String</span><span class="subst">&gt;</span>())<span class="built_in">.</span><span class="built_in">map</span>({<span class="string">"transformed by myOperator: "</span> <span class="subst">+</span> it});
+</code></pre>
+<p><p>The following section shows how you form the scaffolding of your operator so that it will work correctly with <code>compose( )</code>.</p></p>
+<h2 id="implementing_your_transformer">Implementing Your Transformer</h2><p><p>Define your transforming function as a public class that implements the <a href="http://reactivex.io/RxJava/javadoc/rx/Observable.Transformer.html"><code>Transformer</code></a> interface, like so:</p></p>
+<pre><code class="lang-java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">myTransformer</span>&lt;<span class="title">Integer</span>,<span class="title">String</span>&gt; <span class="keyword">implements</span> <span class="title">Transformer</span>&lt;<span class="title">Integer</span>,<span class="title">String</span>&gt; </span>{
+  <span class="keyword">public</span> myTransformer( <span class="comment">/* any necessary params here */</span> ) {
+    <span class="comment">/* any necessary initialization here */</span>
+  }
+
+  <span class="annotation">@Override</span>
+  <span class="keyword">public</span> Observable&lt;String&gt; call(Observable&lt;Integer&gt; source) {
+    <span class="comment">/* 
+     * this simple example Transformer applies map() to the source Observable
+     * in order to transform the "source" observable from one that emits
+     * integers to one that emits string representations of those integers.
+     */</span>
+    <span class="keyword">return</span> source.map( <span class="keyword">new</span> Func1&lt;Integer,String&gt;() {
+      <span class="annotation">@Override</span>
+      <span class="keyword">public</span> String call(Integer t1) {
+        <span class="keyword">return</span> String.valueOf(t1);
+      }
+    } );
+  }
+}
+</code></pre>
+<h2 id="see_also">See also</h2><ul>
+<li><p><a href="http://blog.danlew.net/2015/03/02/dont-break-the-chain/">&ldquo;Don&#8217;t break the chain: use RxJava&#8217;s compose() operator&rdquo;</a> by Dan Lew</p></li>
+</ul>
+<h1 id="other_considerations">Other Considerations</h1><ul>
+<li><p>Your sequence operator may want to check <a href="Observable#unsubscribing">its Subscriber&#8217;s <code>isUnsubscribed( )</code> status</a> before it emits any item to (or sends any notification to) the Subscriber. There&#8217;s no need to waste time generating items that no Subscriber is interested in seeing.</p></li>
+<li><p>Take care that your sequence operator obeys the core tenets of the Observable contract:</p><ul>
+<li><p>It may call a Subscriber&#8217;s <a href="Observable#onnext-oncompleted-and-onerror"><code>onNext( )</code></a> method any number of times, but these calls must be non-overlapping.</p></li>
+<li><p>It may call either a Subscriber&#8217;s <a href="Observable#onnext-oncompleted-and-onerror"><code>onCompleted( )</code></a> or <a href="Observable#onnext-oncompleted-and-onerror"><code>onError( )</code></a> method, but not both, exactly once, and it may not subsequently call a Subscriber&#8217;s <a href="Observable#onnext-oncompleted-and-onerror"><code>onNext( )</code></a> method.</p></li>
+<li><p>If you are unable to guarantee that your operator conforms to the above two tenets, you can add the <a href="Observable-Utility-Operators#serialize"><code>serialize( )</code></a> operator to it, which will force the correct behavior.</p></li>
+</ul>
+</li>
+<li><p>Keep an eye on <a href="https://github.com/ReactiveX/RxJava/issues/1962">Issue #1962</a> &mdash; there are plans to create a test scaffold that you can use to write tests which verify that your new operator conforms to the Observable contract.</p></li>
+<li><p>Do not block within your operator.</p></li>
+<li><p>When possible, you should compose new operators by combining existing operators, rather than implementing them with new code. RxJava itself does this with some of its standard operators, for example:</p><ul>
+<li><p><a href="http://reactivex.io/documentations/operators/first.html"><code>first( )</code></a> is defined as <tt><a href="http://reactivex.io/documentations/operators/take.html">take(1)</a>.<a href="http://reactivex.io/documentations/operators/first.html">single( )</a></tt></p></li>
+<li><p><a href="http://reactivex.io/documentations/operators/ignoreelements.html"><code>ignoreElements( )</code></a> is defined as <tt><a href="http://reactivex.io/documentations/operators/filter.html">filter(alwaysFalse( ))</a></tt></p></li>
+<li><p><a href="http://reactivex.io/documentations/operators/reduce.html"><code>reduce(a)</code></a> is defined as <tt><a href="http://reactivex.io/documentations/operators/scan.html">scan(a)</a>.<a href="http://reactivex.io/documentations/operators/last.html">last( )</a></tt></p></li>
+</ul>
+</li>
+<li><p>If your operator uses functions or lambdas that are passed in as parameters (predicates, for instance), note that these may be sources of exceptions, and be prepared to catch these and notify subscribers via <code>onError( )</code> calls.</p><ul>
+<li><p>Some exceptions are considered &ldquo;fatal&rdquo; and for them there&#8217;s no point in trying to call <code>onError( )</code> because that will either be futile or will just compound the problem. You can use the <code>Exceptions.throwIfFatal(throwable)</code> method to filter out such fatal exceptions and rethrow them rather than try to notify about them.</p></li>
+</ul>
+</li>
+<li><p>In general, notify subscribers of error conditions immediately, rather than making an effort to emit more items first.</p></li>
+<li><p>Be aware that &ldquo;<code>null</code>&rdquo; is a valid item that may be emitted by an Observable. A frequent source of bugs is to test some variable meant to hold an emitted item against <code>null</code> as a substitute for testing whether or not an item was emitted. An emission of &ldquo;<code>null</code>&rdquo; is still an emission and is not the same as not emitting anything.</p></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+</body>
+</html>

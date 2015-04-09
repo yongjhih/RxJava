@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>RxJava</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="stylesheets/base.css">
+    <link rel="stylesheet" href="stylesheets/skeleton.css">
+    <link rel="stylesheet" href="stylesheets/layout.css">
+    <link rel="stylesheet" href="stylesheets/docs.css">
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+</head>
+<body>
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+            <h3 id="logo"><a href="/">RxJava</a></h3>
+                <ul id="navi">
+                    
+                        <li><a href="#rxjavaschedulershook">RxJavaSchedulersHook</a></li>
+                    
+                        <li><a href="#rxjavaerrorhandler">RxJavaErrorHandler</a></li>
+                    
+                        <li><a href="#rxjavaobservableexecutionhook">RxJavaObservableExecutionHook</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+        <div class="twelve columns offset-by-three content">
+            <header>
+                <h1><a href="/">RxJava</a></h1>
+                <div id="social">
+                    <a href="http://twitter.com/share" class="twitter-share-button" data-text="RxJava" data-count="horizontal">Tweet</a>
+                    <a href="http://yongjhih.github.io/RxJava/Plugins/_edit" class="button">Edit</a>
+                </div>
+            </header>
+            <div>
+                <p><p>Plugins allow you to modify the default behavior of RxJava in several respects:</p></p>
+<ul>
+<li><p>by changing the set of default computation, i/o, and new thread Schedulers</p></li>
+<li><p>by registering a handler for extraordinary errors that RxJava may encounter</p></li>
+<li><p>by registering functions that can take note of the occurrence of several regular RxJava activities</p></li>
+</ul>
+<h1 id="rxjavaschedulershook">RxJavaSchedulersHook</h1><p><p>This plugin allows you to override the default computation, i/o, and new thread Schedulers with Schedulers of your choosing. To do this, extend the class <code>RxJavaSchedulersHook</code> and override these methods:</p></p>
+<ul>
+<li><p><code>Scheduler getComputationScheduler( )</code></p></li>
+<li><p><code>Scheduler getIOScheduler( )</code></p></li>
+<li><p><code>Scheduler getNewThreadScheduler( )</code></p></li>
+<li><p><code>Action0 onSchedule(action)</code></p></li>
+</ul>
+<p><p>Then follow these steps:</p></p>
+<ol>
+<li><p>Create an object of the new <code>RxJavaDefaultSchedulers</code> subclass you have implemented.</p></li>
+<li><p>Obtain the global <code>RxJavaPlugins</code> instance via <code>RxJavaPlugins.getInstance( )</code>.</p></li>
+<li><p>Pass your default schedulers object to the <code>registerSchedulersHook( )</code> method of that instance.</p></li>
+</ol>
+<p><p>When you do this, RxJava will begin to use the Schedulers returned by your methods rather than its built-in defaults.</p></p>
+<h1 id="rxjavaerrorhandler">RxJavaErrorHandler</h1><p><p>This plugin allows you to register a function that will handle errors that are passed to <code>Subscriber.onError(Throwable)</code>. To do this, extend the class <code>RxJavaErrorHandler</code> and override this method:</p></p>
+<ul>
+<li><p><code>void handleError(Throwable e)</code></p></li>
+</ul>
+<p><p>Then follow these steps:</p></p>
+<ol>
+<li><p>Create an object of the new <code>RxJavaErrorHandler</code> subclass you have implemented.</p></li>
+<li><p>Obtain the global <code>RxJavaPlugins</code> instance via <code>RxJavaPlugins.getInstance( )</code>.</p></li>
+<li><p>Pass your error handler object to the <code>registerErrorHandler( )</code> method of that instance.</p></li>
+</ol>
+<p><p>When you do this, RxJava will begin to use your error handler to field errors that are passed to <code>Subscriber.onError(Throwable)</code>.</p></p>
+<h1 id="rxjavaobservableexecutionhook">RxJavaObservableExecutionHook</h1><p><p>This plugin allows you to register functions that RxJava will call upon certain regular RxJava activities, for instance for logging or metrics-collection purposes. To do this, extend the class <code>RxJavaObservableExecutionHook</code> and override any or all of these methods:</p></p>
+<table><thead>
+ <tr><th>method</th><th>when invoked</th></tr>
+ </thead><tbody>
+  <tr><td><tt>onCreate( )</tt></td><td>during <tt>Observable.create( )</tt></td></tr>
+  <tr><td><tt>onSubscribeStart( )</tt></td><td>immediately before <tt>Observable.subscribe( )</tt></td></tr>
+  <tr><td><tt>onSubscribeReturn( )</tt></td><td>immediately after <tt>Observable.subscribe( )</tt></td></tr>
+  <tr><td><tt>onSubscribeError( )</tt></td><td>upon a failed execution of <tt>Observable.subscribe( )</tt></td></tr>
+  <tr><td><tt>onLift( )</tt></td><td>during <tt>Observable.lift( )</tt></td></tr>
+ </tbody>
+</table>
+
+<p><p>Then follow these steps:</p></p>
+<ol>
+<li><p>Create an object of the new <code>RxJavaObservableExecutionHook</code> subclass you have implemented.</p></li>
+<li><p>Obtain the global <code>RxJavaPlugins</code> instance via <code>RxJavaPlugins.getInstance( )</code>.</p></li>
+<li><p>Pass your execution hooks object to the <code>registerObservableExecutionHook( )</code> method of that instance.</p></li>
+</ol>
+<p><p>When you do this, RxJava will begin to call your functions when it encounters the specific conditions they were designed to take note of.</p></p>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>RxJava</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="stylesheets/base.css">
+    <link rel="stylesheet" href="stylesheets/skeleton.css">
+    <link rel="stylesheet" href="stylesheets/layout.css">
+    <link rel="stylesheet" href="stylesheets/docs.css">
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+</head>
+<body>
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+            <h3 id="logo"><a href="/">RxJava</a></h3>
+                <ul id="navi">
+                    
+                        <li><a href="#techniques_for_recovering_from_onerror_notifications">Techniques for recovering from onError notifications</a></li>
+                    
+                        <li><a href="#rxjava_specific_exceptions_and_what_do_do_about_them">RxJava-specific exceptions and what do do about them</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+        <div class="twelve columns offset-by-three content">
+            <header>
+                <h1><a href="/">RxJava</a></h1>
+                <div id="social">
+                    <a href="http://twitter.com/share" class="twitter-share-button" data-text="RxJava" data-count="horizontal">Tweet</a>
+                    <a href="http://yongjhih.github.io/RxJava/Error-Handling/_edit" class="button">Edit</a>
+                </div>
+            </header>
+            <div>
+                <p><p>An Observable typically does not <em>throw</em> exceptions. Instead it notifies any observers that an unrecoverable error has occurred by terminating the Observable sequence with an <code>onError</code> notification.</p>
+<p>There are some exceptions to this. For example, if the <code>onError()</code> call <em>itself</em> fails, the Observable will not attempt to notify the observer of this by again calling <code>onError</code> but will throw a <code>RuntimeException</code>, an <code>OnErrorFailedException</code>, or an <code>OnErrorNotImplementedException</code>.</p></p>
+<h1 id="techniques_for_recovering_from_onerror_notifications">Techniques for recovering from onError notifications</h1><p><p>So rather than <em>catch</em> exceptions, your observer or operator should more typically respond to <code>onError</code> notifications of exceptions. There are also a variety of Observable operators that you can use to react to or recover from <code>onError</code> notifications from Observables. For example, you might use an operator to:</p></p>
+<ol>
+<li><p>swallow the error and switch over to a backup Observable to continue the sequence</p></li>
+<li><p>swallow the error and emit a default item</p></li>
+<li><p>swallow the error and immediately try to restart the failed Observable</p></li>
+<li><p>swallow the error and try to restart the failed Observable after some back-off interval</p></li>
+</ol>
+<p><p>You can use the operators described in <a href="error-handling-operators.html">Error Handling Operators</a> to implement these strategies.</p></p>
+<h1 id="rxjava_specific_exceptions_and_what_do_do_about_them">RxJava-specific exceptions and what do do about them</h1><dl>
+ <dt><code>CompositeException</code></dt><dd>This indicates that more than one exception occurred. You can use the exception&#8217;s <code>getExceptions()</code> method to retrieve the individual exceptions that make up the composite.</dd>
+ <dt><code>MissingBackpressureException</code></dt><dd>This indicates that a Subscriber or operator attempted to apply reactive pull backpressure to an Observable that does not implement it. See [[Backpressure]] for work-arounds for Observables that do not implement reactive pull backpressure.</dd>
+ <dt><code>OnErrorFailedException</code></dt><dd>This indicates that an Observable tried to call its observer&#8217;s <code>onError()</code> method, but that method itself threw an exception.</dd>
+ <dt><code>OnErrorNotImplementedException</code></dt><dd>This indicates that an Observable tried to call its observer&#8217;s <code>onError()</code> method, but that no such method existed. You can eliminate this by either fixing the Observable so that it no longer reaches an error condition, by implementing an <code>onError</code> handler in the observer, or by intercepting the <code>onError</code> notification before it reaches the observer by using one of the operators described elsewhere on this page.</dd>
+ <dt><code>OnErrorThrowable</code></dt><dd>Observers pass throwables of this sort into their observers&#8217; <code>onError()</code> handlers. A Throwable of this variety contains more information about the error and about the Observable-specific state of the system at the time of the error than does a standard <code>Throwable</code>.</dd>
+</dl>
+            </div>
+        </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+</body>
+</html>

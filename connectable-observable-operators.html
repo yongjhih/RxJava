@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>RxJava</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="stylesheets/base.css">
+    <link rel="stylesheet" href="stylesheets/skeleton.css">
+    <link rel="stylesheet" href="stylesheets/layout.css">
+    <link rel="stylesheet" href="stylesheets/docs.css">
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+</head>
+<body>
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+            <h3 id="logo"><a href="/">RxJava</a></h3>
+                <ul id="navi">
+                    
+                        <li><a href="#see_also:">see also:</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+        <div class="twelve columns offset-by-three content">
+            <header>
+                <h1><a href="/">RxJava</a></h1>
+                <div id="social">
+                    <a href="http://twitter.com/share" class="twitter-share-button" data-text="RxJava" data-count="horizontal">Tweet</a>
+                    <a href="http://yongjhih.github.io/RxJava/Connectable-Observable-Operators/_edit" class="button">Edit</a>
+                </div>
+            </header>
+            <div>
+                <p><p>This section explains the <a href="http://reactivex.io/RxJava/javadoc/rx/observables/ConnectableObservable.html"><code>ConnectableObservable</code></a> subclass and its operators:</p></p>
+<ul>
+<li><p><a href="http://reactivex.io/documentation/operators/connect.html"><strong><code>ConnectableObservable.connect( )</code></strong></a> — instructs a Connectable Observable to begin emitting items</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/publish.html"><strong><code>Observable.publish( )</code></strong></a> — represents an Observable as a Connectable Observable</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/replay.html"><strong><code>Observable.replay( )</code></strong></a> — ensures that all Subscribers see the same sequence of emitted items, even if they subscribe after the Observable begins emitting the items</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/refcount.html"><strong><code>ConnectableObservable.refCount( )</code></strong></a> — makes a Connectable Observable behave like an ordinary Observable</p></li>
+</ul>
+<p><p>A Connectable Observable resembles an ordinary Observable, except that it does not begin emitting items when it is subscribed to, but only when its <code>connect()</code> method is called. In this way you can wait for all intended Subscribers to subscribe to the Observable before the Observable begins emitting items.</p>
+<p><img src="/ReactiveX/RxJava/wiki/images/rx-operators/publishConnect.png" width="640" height="510" /></p>
+<p>The following example code shows two Subscribers subscribing to the same Observable. In the first case, they subscribe to an ordinary Observable; in the second case, they subscribe to a Connectable Observable that only connects after both Subscribers subscribe. Note the difference in the output:</p>
+<p><strong>Example #1:</strong></p></p>
+<pre><code class="lang-groovy">def firstMillion  = Observable<span class="preprocessor">.range</span>( <span class="number">1</span>, <span class="number">1000000</span> )<span class="preprocessor">.sample</span>(<span class="number">7</span>, java<span class="preprocessor">.util</span><span class="preprocessor">.concurrent</span><span class="preprocessor">.TimeUnit</span><span class="preprocessor">.MILLISECONDS</span>)<span class="comment">;</span>
+
+firstMillion<span class="preprocessor">.subscribe</span>(
+   { println(<span class="string">"Subscriber #1:"</span> + it)<span class="comment">; },       // onNext</span>
+   { println(<span class="string">"Error: "</span> + it<span class="preprocessor">.getMessage</span>())<span class="comment">; }, // onError</span>
+   { println(<span class="string">"Sequence #1 complete"</span>)<span class="comment">; }       // onCompleted</span>
+)<span class="comment">;</span>
+
+firstMillion<span class="preprocessor">.subscribe</span>(
+    { println(<span class="string">"Subscriber #2:"</span> + it)<span class="comment">; },       // onNext</span>
+    { println(<span class="string">"Error: "</span> + it<span class="preprocessor">.getMessage</span>())<span class="comment">; }, // onError</span>
+    { println(<span class="string">"Sequence #2 complete"</span>)<span class="comment">; }       // onCompleted</span>
+)<span class="comment">;</span>
+</code></pre>
+<pre><code><span class="tag">Subscriber</span> <span class="id">#1</span><span class="pseudo">:211128</span>
+<span class="tag">Subscriber</span> <span class="id">#1</span><span class="pseudo">:411633</span>
+<span class="tag">Subscriber</span> <span class="id">#1</span><span class="pseudo">:629605</span>
+<span class="tag">Subscriber</span> <span class="id">#1</span><span class="pseudo">:841903</span>
+<span class="tag">Sequence</span> <span class="id">#1</span> <span class="tag">complete</span>
+<span class="tag">Subscriber</span> <span class="id">#2</span><span class="pseudo">:244776</span>
+<span class="tag">Subscriber</span> <span class="id">#2</span><span class="pseudo">:431416</span>
+<span class="tag">Subscriber</span> <span class="id">#2</span><span class="pseudo">:621647</span>
+<span class="tag">Subscriber</span> <span class="id">#2</span><span class="pseudo">:826996</span>
+<span class="tag">Sequence</span> <span class="id">#2</span> <span class="tag">complete</span>
+</code></pre><p><p><strong>Example #2:</strong></p></p>
+<pre><code class="lang-groovy">def firstMillion  = Observable<span class="preprocessor">.range</span>( <span class="number">1</span>, <span class="number">1000000</span> )<span class="preprocessor">.sample</span>(<span class="number">7</span>, java<span class="preprocessor">.util</span><span class="preprocessor">.concurrent</span><span class="preprocessor">.TimeUnit</span><span class="preprocessor">.MILLISECONDS</span>)<span class="preprocessor">.publish</span>()<span class="comment">;</span>
+
+firstMillion<span class="preprocessor">.subscribe</span>(
+   { println(<span class="string">"Subscriber #1:"</span> + it)<span class="comment">; },       // onNext</span>
+   { println(<span class="string">"Error: "</span> + it<span class="preprocessor">.getMessage</span>())<span class="comment">; }, // onError</span>
+   { println(<span class="string">"Sequence #1 complete"</span>)<span class="comment">; }       // onCompleted</span>
+)<span class="comment">;</span>
+
+firstMillion<span class="preprocessor">.subscribe</span>(
+   { println(<span class="string">"Subscriber #2:"</span> + it)<span class="comment">; },       // onNext</span>
+   { println(<span class="string">"Error: "</span> + it<span class="preprocessor">.getMessage</span>())<span class="comment">; }, // onError</span>
+   { println(<span class="string">"Sequence #2 complete"</span>)<span class="comment">; }       // onCompleted</span>
+)<span class="comment">;</span>
+
+firstMillion<span class="preprocessor">.connect</span>()<span class="comment">;</span>
+</code></pre>
+<pre><code><span class="tag">Subscriber</span> <span class="id">#2</span><span class="pseudo">:208683</span>
+<span class="tag">Subscriber</span> <span class="id">#1</span><span class="pseudo">:208683</span>
+<span class="tag">Subscriber</span> <span class="id">#2</span><span class="pseudo">:432509</span>
+<span class="tag">Subscriber</span> <span class="id">#1</span><span class="pseudo">:432509</span>
+<span class="tag">Subscriber</span> <span class="id">#2</span><span class="pseudo">:644270</span>
+<span class="tag">Subscriber</span> <span class="id">#1</span><span class="pseudo">:644270</span>
+<span class="tag">Subscriber</span> <span class="id">#2</span><span class="pseudo">:887885</span>
+<span class="tag">Subscriber</span> <span class="id">#1</span><span class="pseudo">:887885</span>
+<span class="tag">Sequence</span> <span class="id">#2</span> <span class="tag">complete</span>
+<span class="tag">Sequence</span> <span class="id">#1</span> <span class="tag">complete</span>
+</code></pre><h4 id="see_also:">see also:</h4><ul>
+<li><p>javadoc: <a href="http://reactivex.io/RxJava/javadoc/rx/observables/ConnectableObservable.html"><code>ConnectableObservable</code></a></p></li>
+<li><p><a href="http://www.introtorx.com/Content/v1.0.10621.0/14_HotAndColdObservables.html#PublishAndConnect">Introduction to Rx: Publish and Connect</a></p></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>RxJava</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="stylesheets/base.css">
+    <link rel="stylesheet" href="stylesheets/skeleton.css">
+    <link rel="stylesheet" href="stylesheets/layout.css">
+    <link rel="stylesheet" href="stylesheets/docs.css">
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+</head>
+<body>
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+            <h3 id="logo"><a href="/">RxJava</a></h3>
+                <ul id="navi">
+                    
+                </ul>
+            </nav>
+        </div>
+        <div class="twelve columns offset-by-three content">
+            <header>
+                <h1><a href="/">RxJava</a></h1>
+                <div id="social">
+                    <a href="http://twitter.com/share" class="twitter-share-button" data-text="RxJava" data-count="horizontal">Tweet</a>
+                    <a href="http://yongjhih.github.io/RxJava/Alphabetical-List-of-Observable-Operators/_edit" class="button">Edit</a>
+                </div>
+            </header>
+            <div>
+                <ul>
+<li><p><strong><code>aggregate( )</code></strong> — <em>see <a href="Mathematical-and-Aggregate-Operators#reduce"><strong><code>reduce( )</code></strong></a></em></p></li>
+<li><p><a href="Conditional-and-Boolean-Operators#all"><strong><code>all( )</code></strong></a> — determine whether all items emitted by an Observable meet some criteria</p></li>
+<li><p><a href="Conditional-and-Boolean-Operators#amb"><strong><code>amb( )</code></strong></a> — given two or more source Observables, emits all of the items from the first of these Observables to emit an item</p></li>
+<li><p><strong><code>ambWith( )</code></strong> — <em>instance version of <a href="Conditional-and-Boolean-Operators#amb"><strong><code>amb( )</code></strong></a></em></p></li>
+<li><p><a href="Combining-Observables#and-then-and-when"><strong><code>and( )</code></strong></a> — combine the emissions from two or more source Observables into a <code>Pattern</code> (<code>rxjava-joins</code>)</p></li>
+<li><p><strong><code>apply( )</code></strong> (scala) — <em>see <a href="Creating-Observables#create"><strong><code>create( )</code></strong></a></em></p></li>
+<li><p><strong><code>asObservable( )</code></strong> (kotlin) — <em>see <a href="Creating-Observables#from"><strong><code>from( )</code></strong></a> (et al.)</em></p></li>
+<li><p><a href="Async-Operators#toasync-or-asyncaction-or-asyncfunc"><strong><code>asyncAction( )</code></strong></a> — convert an Action into an Observable that executes the Action and emits its return value (<code>rxjava-async</code>)</p></li>
+<li><p><a href="Async-Operators#toasync-or-asyncaction-or-asyncfunc"><strong><code>asyncFunc( )</code></strong></a> — convert a function into an Observable that executes the function and emits its return value (<code>rxjava-async</code>)</p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#averageinteger-averagelong-averagefloat-and-averagedouble"><strong><code>averageDouble( )</code></strong></a> — calculates the average of Doubles emitted by an Observable and emits this average (<code>rxjava-math</code>)</p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#averageinteger-averagelong-averagefloat-and-averagedouble"><strong><code>averageFloat( )</code></strong></a> — calculates the average of Floats emitted by an Observable and emits this average (<code>rxjava-math</code>)</p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#averageinteger-averagelong-averagefloat-and-averagedouble"><strong><code>averageInteger( )</code></strong></a> — calculates the average of Integers emitted by an Observable and emits this average (<code>rxjava-math</code>)</p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#averageinteger-averagelong-averagefloat-and-averagedouble"><strong><code>averageLong( )</code></strong></a> — calculates the average of Longs emitted by an Observable and emits this average (<code>rxjava-math</code>)</p></li>
+<li><p><strong><code>blocking( )</code></strong> (clojure) — <em>see <a href="Blocking-Observable-Operators"><strong><code>toBlocking( )</code></strong></a></em></p></li>
+<li><p><a href="Transforming-Observables#buffer"><strong><code>buffer( )</code></strong></a> — periodically gather items from an Observable into bundles and emit these bundles rather than emitting the items one at a time</p></li>
+<li><p><a href="String-Observables#byline"><strong><code>byLine( )</code></strong></a> (<code>StringObservable</code>) — converts an Observable of Strings into an Observable of Lines by treating the source sequence as a stream and splitting it on line-endings</p></li>
+<li><p><a href="Observable-Utility-Operators#cache"><strong><code>cache( )</code></strong></a> — remember the sequence of items emitted by the Observable and emit the same sequence to future Subscribers</p></li>
+<li><p><a href="Transforming-Observables#cast"><strong><code>cast( )</code></strong></a> — cast all items from the source Observable into a particular type before reemitting them</p></li>
+<li><p><strong><code>catch( )</code></strong> (clojure) — <em>see <a href="Error-Handling-Operators#onerrorresumenext"><strong><code>onErrorResumeNext( )</code></strong></a></em></p></li>
+<li><p><a href="Phantom-Operators#chunkify"><strong><code>chunkify( )</code></strong></a> — returns an iterable that periodically returns a list of items emitted by the source Observable since the last list (⁇)</p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#collect"><strong><code>collect( )</code></strong></a> — collects items emitted by the source Observable into a single mutable data structure and returns an Observable that emits this structure</p></li>
+<li><p><a href="Combining-Observables#combinelatest"><strong><code>combineLatest( )</code></strong></a> — when an item is emitted by either of two Observables, combine the latest item emitted by each Observable via a specified function and emit items based on the results of this function</p></li>
+<li><p><strong><code>combineLatestWith( )</code></strong> (scala) — <em>instance version of <a href="Combining-Observables#combinelatest"><strong><code>combineLatest( )</code></strong></a></em></p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#concat"><strong><code>concat( )</code></strong></a> — concatenate two or more Observables sequentially</p></li>
+<li><p><a href="Transforming-Observables#flatmap-concatmap-and-flatmapiterable"><strong><code>concatMap( )</code></strong></a> — transform the items emitted by an Observable into Observables, then flatten this into a single Observable, without interleaving</p></li>
+<li><p><strong><code>concatWith( )</code></strong> — <em>instance version of <a href="Mathematical-and-Aggregate-Operators#concat"><strong><code>concat( )</code></strong></a></em></p></li>
+<li><p><a href="Connectable-Observable-Operators#connectableobservableconnect"><strong><code>connect( )</code></strong></a> — instructs a Connectable Observable to begin emitting items</p></li>
+<li><p><strong><code>cons( )</code></strong> (clojure) — <em>see <a href="Mathematical-and-Aggregate-Operators#concat"><strong><code>concat( )</code></strong></a></em></p></li>
+<li><p><a href="Conditional-and-Boolean-Operators#contains"><strong><code>contains( )</code></strong></a> — determine whether an Observable emits a particular item or not</p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#count-and-countlong"><strong><code>count( )</code></strong></a> — counts the number of items emitted by an Observable and emits this count</p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#count-and-countlong"><strong><code>countLong( )</code></strong></a> — counts the number of items emitted by an Observable and emits this count</p></li>
+<li><p><a href="Creating-Observables#create"><strong><code>create( )</code></strong></a> — create an Observable from scratch by means of a function</p></li>
+<li><p><strong><code>cycle( )</code></strong> (clojure) — <em>see <a href="Creating-Observables#repeat"><strong><code>repeat( )</code></strong></a></em></p></li>
+<li><p><a href="Filtering-Observables#throttlewithtimeout-or-debounce"><strong><code>debounce( )</code></strong></a> — only emit an item from the source Observable after a particular timespan has passed without the Observable emitting any other items</p></li>
+<li><p><a href="String-Observables#decode"><strong><code>decode( )</code></strong></a> (<code>StringObservable</code>) — convert a stream of multibyte characters into an Observable that emits byte arrays that respect character boundaries</p></li>
+<li><p><a href="Conditional-and-Boolean-Operators#defaultifempty"><strong><code>defaultIfEmpty( )</code></strong></a> — emit items from the source Observable, or emit a default item if the source Observable completes after emitting no items</p></li>
+<li><p><a href="Creating-Observables#defer"><strong><code>defer( )</code></strong></a> — do not create the Observable until a Subscriber subscribes; create a fresh Observable on each subscription</p></li>
+<li><p><a href="Async-Operators#deferfuture"><strong><code>deferFuture( )</code></strong></a> — convert a Future that returns an Observable into an Observable, but do not attempt to get the Observable that the Future returns until a Subscriber subscribes (<code>rxjava-async</code>)</p></li>
+<li><p><a href="Phantom-Operators#fromcancellablefuture-startcancellablefuture-and-defercancellablefuture-"><strong><code>deferCancellableFuture( )</code></strong></a> — convert a Future that returns an Observable into an Observable in a way that monitors the subscription status of the Observable to determine whether to halt work on the Future, but do not attempt to get the returned Observable until a Subscriber subscribes (⁇)(<code>rxjava-async</code>)</p></li>
+<li><p><a href="Observable-Utility-Operators#delay"><strong><code>delay( )</code></strong></a> — shift the emissions from an Observable forward in time by a specified amount</p></li>
+<li><p><a href="Observable-Utility-Operators#dematerialize"><strong><code>dematerialize( )</code></strong></a> — convert a materialized Observable back into its non-materialized form</p></li>
+<li><p><a href="Filtering-Observables#distinct"><strong><code>distinct( )</code></strong></a> — suppress duplicate items emitted by the source Observable</p></li>
+<li><p><a href="Filtering-Observables#distinctuntilchanged"><strong><code>distinctUntilChanged( )</code></strong></a> — suppress duplicate consecutive items emitted by the source Observable</p></li>
+<li><p><strong><code>do( )</code></strong> (clojure) — <em>see <a href="Observable-Utility-Operators#dooneach"><strong><code>doOnEach( )</code></strong></a></em></p></li>
+<li><p><a href="Observable-Utility-Operators#dooncompleted"><strong><code>doOnCompleted( )</code></strong></a> — register an action to take when an Observable completes successfully</p></li>
+<li><p><a href="Observable-Utility-Operators#dooneach"><strong><code>doOnEach( )</code></strong></a> — register an action to take whenever an Observable emits an item</p></li>
+<li><p><a href="Observable-Utility-Operators#doonerror"><strong><code>doOnError( )</code></strong></a> — register an action to take when an Observable completes with an error</p></li>
+<li><p><strong><code>doOnNext( )</code></strong> — <em>see <a href="Observable-Utility-Operators#dooneach"><strong><code>doOnEach( )</code></strong></a></em></p></li>
+<li><p><strong><code>doOnRequest( )</code></strong> — register an action to take when items are requested from an Observable via reactive-pull backpressure (⁇)</p></li>
+<li><p><a href="Observable-Utility-Operators#doonsubscribe"><strong><code>doOnSubscribe( )</code></strong></a> — register an action to take when an observer subscribes to an Observable</p></li>
+<li><p><a href="Observable-Utility-Operators#doonterminate"><strong><code>doOnTerminate( )</code></strong></a> — register an action to take when an Observable completes, either successfully or with an error</p></li>
+<li><p><a href="Observable-Utility-Operators#doonunsubscribe"><strong><code>doOnUnsubscribe( )</code></strong></a> — register an action to take when an observer unsubscribes from an Observable</p></li>
+<li><p><a href="Conditional-and-Boolean-Operators#dowhile"><strong><code>doWhile( )</code></strong></a> — emit the source Observable&#39;s sequence, and then repeat the sequence as long as a condition remains true (<code>contrib-computation-expressions</code>)</p></li>
+<li><p><strong><code>drop( )</code></strong> (scala/clojure) — <em>see <a href="Filtering-Observables#skip"><strong><code>skip( )</code></strong></a></em></p></li>
+<li><p><strong><code>dropRight( )</code></strong> (scala) — <em>see <a href="Filtering-Observables#skiplast"><strong><code>skipLast( )</code></strong></a></em></p></li>
+<li><p><strong><code>dropUntil( )</code></strong> (scala) — <em>see <a href="Conditional-and-Boolean-Operators#skipuntil"><strong><code>skipUntil( )</code></strong></a></em></p></li>
+<li><p><strong><code>dropWhile( )</code></strong> (scala) — <em>see <a href="Conditional-and-Boolean-Operators#skipwhile"><strong><code>skipWhile( )</code></strong></a></em></p></li>
+<li><p><strong><code>drop-while( )</code></strong> (clojure) — <em>see <a href="Conditional-and-Boolean-Operators#skipwhile"><strong><code>skipWhile( )</code></strong></a></em></p></li>
+<li><p><a href="Filtering-Observables#elementat"><strong><code>elementAt( )</code></strong></a> — emit item <em>n</em> emitted by the source Observable</p></li>
+<li><p><a href="Filtering-Observables#elementatordefault"><strong><code>elementAtOrDefault( )</code></strong></a> — emit item <em>n</em> emitted by the source Observable, or a default item if the source Observable emits fewer than <em>n</em> items</p></li>
+<li><p><a href="Creating-Observables#empty-error-and-never"><strong><code>empty( )</code></strong></a> — create an Observable that emits nothing and then completes</p></li>
+<li><p><a href="String-Observables#encode"><strong><code>encode( )</code></strong></a> (<code>StringObservable</code>) — transform an Observable that emits strings into an Observable that emits byte arrays that respect character boundaries of multibyte characters in the original strings</p></li>
+<li><p><a href="Creating-Observables#empty-error-and-never"><strong><code>error( )</code></strong></a> — create an Observable that emits nothing and then signals an error</p></li>
+<li><p><strong><code>every( )</code></strong> (clojure) — <em>see <a href="Conditional-and-Boolean-Operators#all"><strong><code>all( )</code></strong></a></em></p></li>
+<li><p><a href="Conditional-and-Boolean-Operators#exists-and-isempty"><strong><code>exists( )</code></strong></a> — determine whether an Observable emits any items or not</p></li>
+<li><p><a href="Filtering-Observables#filter"><strong><code>filter( )</code></strong></a> — filter items emitted by an Observable</p></li>
+<li><p><strong><code>finally( )</code></strong> (clojure) — <em>see <a href="Observable-Utility-Operators#finallydo"><strong><code>finallyDo( )</code></strong></a></em></p></li>
+<li><p><strong><code>filterNot( )</code></strong> (scala) — <em>see <a href="Filtering-Observables#filter"><strong><code>filter( )</code></strong></a></em></p></li>
+<li><p><a href="Observable-Utility-Operators#finallydo"><strong><code>finallyDo( )</code></strong></a> — register an action to take when an Observable completes</p></li>
+<li><p><a href="Filtering-Observables#first-and-takefirst"><strong><code>first( )</code></strong></a> (<code>Observable</code>) — emit only the first item emitted by an Observable, or the first item that meets some condition</p></li>
+<li><p><a href="Blocking-Observable-Operators#first-and-firstordefault"><strong><code>first( )</code></strong></a> (<code>BlockingObservable</code>) — emit only the first item emitted by an Observable, or the first item that meets some condition</p></li>
+<li><p><a href="Filtering-Observables#firstordefault"><strong><code>firstOrDefault( )</code></strong></a> (<code>Observable</code>) — emit only the first item emitted by an Observable, or the first item that meets some condition, or a default value if the source Observable is empty</p></li>
+<li><p><a href="Blocking-Observable-Operators#first-and-firstordefault"><strong><code>firstOrDefault( )</code></strong></a> (<code>BlockingObservable</code>) — emit only the first item emitted by an Observable, or the first item that meets some condition, or a default value if the source Observable is empty</p></li>
+<li><p><strong><code>firstOrElse( )</code></strong> (scala) — <em>see <a href="Filtering-Observables#firstordefault"><strong><code>firstOrDefault( )</code></strong></a> or <a href="Blocking-Observable-Operators#first-and-firstordefault"><strong><code>firstOrDefault( )</code></strong></a> (<code>BlockingObservable</code>)</em></p></li>
+<li><p><a href="Transforming-Observables#flatmap-concatmap-and-flatmapiterable"><strong><code>flatMap( )</code></strong></a> — transform the items emitted by an Observable into Observables, then flatten this into a single Observable</p></li>
+<li><p><a href="Transforming-Observables#flatmap-concatmap-and-flatmapiterable"><strong><code>flatMapIterable( )</code></strong></a> — create Iterables corresponding to each emission from a source Observable and merge the results into a single Observable</p></li>
+<li><p><strong><code>flatMapIterableWith( )</code></strong> (scala) — <em>instance version of <a href="Transforming-Observables#flatmap-concatmap-and-flatmapiterable"><strong><code>flatMapIterable( )</code></strong></a></em></p></li>
+<li><p><strong><code>flatMapWith( )</code></strong> (scala) — <em>instance version of <a href="Transforming-Observables#flatmap-concatmap-and-flatmapiterable"><strong><code>flatmap( )</code></strong></a></em></p></li>
+<li><p><strong><code>flatten( )</code></strong> (scala) — <em>see <a href="Combining-Observables#merge"><strong><code>merge( )</code></strong></a></em></p></li>
+<li><p><strong><code>flattenDelayError( )</code></strong> (scala) — <em>see <a href="Combining-Observables#mergedelayerror"><strong><code>mergeDelayError( )</code></strong></a></em></p></li>
+<li><p><strong><code>foldLeft( )</code></strong> (scala) — <em>see <a href="Mathematical-and-Aggregate-Operators#reduce"><strong><code>reduce( )</code></strong></a></em></p></li>
+<li><p><strong><code>forall( )</code></strong> (scala) — <em>see <a href="Conditional-and-Boolean-Operators#all"><strong><code>all( )</code></strong></a></em></p></li>
+<li><p><strong><code>forEach( )</code></strong> (<code>Observable</code>) — <em>see <a href="Observable#onnext-oncompleted-and-onerror"><strong><code>subscribe( )</code></strong></a></em></p></li>
+<li><p><a href="Blocking-Observable-Operators#foreach"><strong><code>forEach( )</code></strong></a> (<code>BlockingObservable</code>) — invoke a function on each item emitted by the Observable; block until the Observable completes</p></li>
+<li><p><a href="Async-Operators#foreachfuture"><strong><code>forEachFuture( )</code></strong></a> (<code>Async</code>) — pass Subscriber methods to an Observable but also have it behave like a Future that blocks until it completes (<code>rxjava-async</code>)</p></li>
+<li><p><a href="Phantom-Operators#foreachfuture"><strong><code>forEachFuture( )</code></strong></a> (<code>BlockingObservable</code>)— create a futureTask that will invoke a specified function on each item emitted by an Observable (⁇)</p></li>
+<li><p><a href="Phantom-Operators#foriterable"><strong><code>forIterable( )</code></strong></a> — apply a function to the elements of an Iterable to create Observables which are then concatenated (⁇)</p></li>
+<li><p><a href="Creating-Observables#from"><strong><code>from( )</code></strong></a> — convert an Iterable, a Future, or an Array into an Observable</p></li>
+<li><p><a href="String-Observables#from"><strong><code>from( )</code></strong></a> (<code>StringObservable</code>) — convert a stream of characters or a Reader into an Observable that emits byte arrays or Strings</p></li>
+<li><p><a href="Async-Operators#fromaction"><strong><code>fromAction( )</code></strong></a> — convert an Action into an Observable that invokes the action and emits its result when a Subscriber subscribes (<code>rxjava-async</code>)</p></li>
+<li><p><a href="Async-Operators#fromcallable"><strong><code>fromCallable( )</code></strong></a> — convert a Callable into an Observable that invokes the callable and emits its result or exception when a Subscriber subscribes (<code>rxjava-async</code>)</p></li>
+<li><p><a href="Phantom-Operators#fromcancellablefuture-startcancellablefuture-and-defercancellablefuture-"><strong><code>fromCancellableFuture( )</code></strong></a> — convert a Future into an Observable in a way that monitors the subscription status of the Observable to determine whether to halt work on the Future, but do not attempt to get the Future&#39;s value until a Subscriber subscribes (⁇)(<code>rxjava-async</code>)</p></li>
+<li><p><strong><code>fromFunc0( )</code></strong> — <em>see <a href="Async-Operators#fromcallable"><strong><code>fromCallable( )</code></strong></a> (<code>rxjava-async</code>)</em></p></li>
+<li><p><a href="Phantom-Operators#fromfuture"><strong><code>fromFuture( )</code></strong></a> — convert a Future into an Observable, but do not attempt to get the Future&#39;s value until a Subscriber subscribes (⁇)</p></li>
+<li><p><a href="Async-Operators#fromrunnable"><strong><code>fromRunnable( )</code></strong></a> — convert a Runnable into an Observable that invokes the runable and emits its result when a Subscriber subscribes (<code>rxjava-async</code>)</p></li>
+<li><p><a href="Phantom-Operators#generate-and-generateabsolutetime"><strong><code>generate( )</code></strong></a> — create an Observable that emits a sequence of items as generated by a function of your choosing (⁇)</p></li>
+<li><p><a href="Phantom-Operators#generate-and-generateabsolutetime"><strong><code>generateAbsoluteTime( )</code></strong></a> — create an Observable that emits a sequence of items as generated by a function of your choosing, with each item emitted at an item-specific time (⁇)</p></li>
+<li><p><strong><code>generator( )</code></strong> (clojure) — <em>see <a href="Phantom-Operators#generate-and-generateabsolutetime"><strong><code>generate( )</code></strong></a></em></p></li>
+<li><p><a href="Blocking-Observable-Operators#transformations-tofuture-toiterable-and-getiterator"><strong><code>getIterator( )</code></strong></a> — convert the sequence emitted by the Observable into an Iterator</p></li>
+<li><p><a href="Transforming-Observables#groupby"><strong><code>groupBy( )</code></strong></a> — divide an Observable into a set of Observables that emit groups of items from the original Observable, organized by key</p></li>
+<li><p><strong><code>group-by( )</code></strong> (clojure) — <em>see <a href="Transforming-Observables#groupby"><strong><code>groupBy( )</code></strong></a></em></p></li>
+<li><p><a href="Phantom-Operators#groupbyuntil"><strong><code>groupByUntil( )</code></strong></a> — a variant of the <a href="Transforming-Observables#groupby"><code>groupBy( )</code></a> operator that closes any open GroupedObservable upon a signal from another Observable (⁇)</p></li>
+<li><p><a href="Combining-Observables#join-and-groupjoin"><strong><code>groupJoin( )</code></strong></a> — combine the items emitted by two Observables whenever one item from one Observable falls within a window of duration specified by an item emitted by the other Observable</p></li>
+<li><p><strong><code>head( )</code></strong> (scala) — <em>see <a href="Blocking-Observable-Operators#first-and-firstordefault"><strong><code>first( )</code></strong></a> (<code>BlockingObservable</code>)</em></p></li>
+<li><p><strong><code>headOption( )</code></strong> (scala) — <em>see <a href="Filtering-Observables#firstordefault"><strong><code>firstOrDefault( )</code></strong></a> or <a href="Blocking-Observable-Operators#first-and-firstordefault"><strong><code>firstOrDefault( )</code></strong></a> (<code>BlockingObservable</code>)</em></p></li>
+<li><p><strong><code>headOrElse( )</code></strong> (scala) — <em>see <a href="Filtering-Observables#firstordefault"><strong><code>firstOrDefault( )</code></strong></a> or <a href="Blocking-Observable-Operators#first-and-firstordefault"><strong><code>firstOrDefault( )</code></strong></a> (<code>BlockingObservable</code>)</em></p></li>
+<li><p><a href="Conditional-and-Boolean-Operators#ifthen"><strong><code>ifThen( )</code></strong></a> — only emit the source Observable&#39;s sequence if a condition is true, otherwise emit an empty or default sequence (<code>contrib-computation-expressions</code>)</p></li>
+<li><p><a href="Filtering-Observables#ignoreelements"><strong><code>ignoreElements( )</code></strong></a> — discard the items emitted by the source Observable and only pass through the error or completed notification</p></li>
+<li><p><a href="Creating-Observables#interval"><strong><code>interval( )</code></strong></a> — create an Observable that emits a sequence of integers spaced by a given time interval</p></li>
+<li><p><strong><code>into( )</code></strong> (clojure) — <em>see <a href="Mathematical-and-Aggregate-Operators#reduce"><strong><code>reduce( )</code></strong></a></em></p></li>
+<li><p><a href="Conditional-and-Boolean-Operators#exists-and-isempty"><strong><code>isEmpty( )</code></strong></a> — determine whether an Observable emits any items or not</p></li>
+<li><p><strong><code>items( )</code></strong> (scala) — <em>see <a href="Creating-Observables#just"><strong><code>just( )</code></strong></a></em></p></li>
+<li><p><a href="Combining-Observables#join-and-groupjoin"><strong><code>join( )</code></strong></a> — combine the items emitted by two Observables whenever one item from one Observable falls within a window of duration specified by an item emitted by the other Observable</p></li>
+<li><p><a href="String-Observables#join"><strong><code>join( )</code></strong></a> (<code>StringObservable</code>) — converts an Observable that emits a sequence of strings into an Observable that emits a single string that concatenates them all, separating them by a specified string</p></li>
+<li><p><a href="Creating-Observables#just"><strong><code>just( )</code></strong></a> — convert an object into an Observable that emits that object</p></li>
+<li><p><a href="Blocking-Observable-Operators#last-and-lastordefault"><strong><code>last( )</code></strong></a> (<code>BlockingObservable</code>) — block until the Observable completes, then return the last item emitted by the Observable</p></li>
+<li><p><a href="Filtering-Observables#last"><strong><code>last( )</code></strong></a> (<code>Observable</code>) — emit only the last item emitted by the source Observable</p></li>
+<li><p><strong><code>lastOption( )</code></strong> (scala) — <em>see <a href="Filtering-Observables#lastOrDefault"><strong><code>lastOrDefault( )</code></strong></a> or <a href="Blocking-Observable-Operators#last-and-lastordefault"><strong><code>lastOrDefault( )</code></strong></a> (<code>BlockingObservable</code>)</em></p></li>
+<li><p><a href="Blocking-Observable-Operators#last-and-lastordefault"><strong><code>lastOrDefault( )</code></strong></a> (<code>BlockingObservable</code>) — block until the Observable completes, then return the last item emitted by the Observable or a default item if there is no last item</p></li>
+<li><p><a href="Filtering-Observables#lastOrDefault"><strong><code>lastOrDefault( )</code></strong></a> (<code>Observable</code>) — emit only the last item emitted by an Observable, or a default value if the source Observable is empty</p></li>
+<li><p><strong><code>lastOrElse( )</code></strong> (scala) — <em>see <a href="Filtering-Observables#lastOrDefault"><strong><code>lastOrDefault( )</code></strong></a> or <a href="Blocking-Observable-Operators#last-and-lastordefault"><strong><code>lastOrDefault( )</code></strong></a> (<code>BlockingObservable</code>)</em></p></li>
+<li><p><a href="Blocking-Observable-Operators#latest"><strong><code>latest( )</code></strong></a> — returns an iterable that blocks until or unless the Observable emits an item that has not been returned by the iterable, then returns the latest such item</p></li>
+<li><p><strong><code>length( )</code></strong> (scala) — <em>see <a href="Mathematical-and-Aggregate-Operators#count-and-countlong"><strong><code>count( )</code></strong></a></em></p></li>
+<li><p><strong><code>limit( )</code></strong> — <em>see <a href="Filtering-Observables#take"><strong><code>take( )</code></strong></a></em></p></li>
+<li><p><strong><code>longCount( )</code></strong> (scala) — <em>see <a href="Mathematical-and-Aggregate-Operators#count-and-countlong"><strong><code>countLong( )</code></strong></a></em></p></li>
+<li><p><a href="Transforming-Observables#map"><strong><code>map( )</code></strong></a> — transform the items emitted by an Observable by applying a function to each of them</p></li>
+<li><p><strong><code>mapcat( )</code></strong> (clojure) — <em>see <a href="Transforming-Observables#flatmap-concatmap-and-flatmapiterable"><strong><code>concatMap( )</code></strong></a></em></p></li>
+<li><p><strong><code>mapMany( )</code></strong> — <em>see: <a href="Transforming-Observables#flatmap-concatmap-and-flatmapiterable"><strong><code>flatMap( )</code></strong></a></em></p></li>
+<li><p><a href="Observable-Utility-Operators#materialize"><strong><code>materialize( )</code></strong></a> — convert an Observable into a list of Notifications</p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#max"><strong><code>max( )</code></strong></a> — emits the maximum value emitted by a source Observable (<code>rxjava-math</code>)</p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#maxby"><strong><code>maxBy( )</code></strong></a> — emits the item emitted by the source Observable that has the maximum key value (<code>rxjava-math</code>)</p></li>
+<li><p><a href="Combining-Observables#merge"><strong><code>merge( )</code></strong></a> — combine multiple Observables into one</p></li>
+<li><p><a href="Combining-Observables#mergedelayerror"><strong><code>mergeDelayError( )</code></strong></a> — combine multiple Observables into one, allowing error-free Observables to continue before propagating errors</p></li>
+<li><p><strong><code>merge-delay-error( )</code></strong> (clojure) — <em>see <a href="Combining-Observables#mergedelayerror"><strong><code>mergeDelayError( )</code></strong></a></em></p></li>
+<li><p><strong><code>mergeMap( )</code></strong> <em> — _see: [<em>*<code>flatMap( )</code></em></em>](Transforming-Observables#flatmap-concatmap-and-flatmapiterable)_</p></li>
+<li><p><strong><code>mergeMapIterable( )</code></strong> — <em>see: <a href="Transforming-Observables#flatmap-concatmap-and-flatmapiterable"><strong><code>flatMapIterable( )</code></strong></a></em></p></li>
+<li><p><strong><code>mergeWith( )</code></strong> — <em>instance version of <a href="Combining-Observables#merge"><strong><code>merge( )</code></strong></a></em></p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#min"><strong><code>min( )</code></strong></a> — emits the minimum value emitted by a source Observable (<code>rxjava-math</code>)</p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#minby"><strong><code>minBy( )</code></strong></a> — emits the item emitted by the source Observable that has the minimum key value (<code>rxjava-math</code>)</p></li>
+<li><p><a href="Blocking-Observable-Operators#mostrecent"><strong><code>mostRecent( )</code></strong></a> — returns an iterable that always returns the item most recently emitted by the Observable</p></li>
+<li><p><a href="Phantom-Operators#multicast"><strong><code>multicast( )</code></strong></a> — represents an Observable as a Connectable Observable</p></li>
+<li><p><a href="Creating-Observables#empty-error-and-never"><strong><code>never( )</code></strong></a> — create an Observable that emits nothing at all</p></li>
+<li><p><a href="Blocking-Observable-Operators#next"><strong><code>next( )</code></strong></a> — returns an iterable that blocks until the Observable emits another item, then returns that item</p></li>
+<li><p><strong><code>nonEmpty( )</code></strong> (scala) — <em>see <a href="Conditional-and-Boolean-Operators#exists-and-isempty"><strong><code>isEmpty( )</code></strong></a></em></p></li>
+<li><p><strong><code>nth( )</code></strong> (clojure) — <em>see <a href="Filtering-Observables#elementat"><strong><code>elementAt( )</code></strong></a> and <a href="Filtering-Observables#elementatordefault"><strong><code>elementAtOrDefault( )</code></strong></a></em></p></li>
+<li><p><a href="Observable-Utility-Operators#observeon"><strong><code>observeOn( )</code></strong></a> — specify on which Scheduler a Subscriber should observe the Observable</p></li>
+<li><p><a href="Filtering-Observables#oftype"><strong><code>ofType( )</code></strong></a> — emit only those items from the source Observable that are of a particular class</p></li>
+<li><p><a href="Backpressure"><strong><code>onBackpressureBlock( )</code></strong></a> — block the Observable&#39;s thread until the Observer is ready to accept more items from the Observable (⁇)</p></li>
+<li><p><a href="Backpressure"><strong><code>onBackpressureBuffer( )</code></strong></a> — maintain a buffer of all emissions from the source Observable and emit them to downstream Subscribers according to the requests they generate</p></li>
+<li><p><a href="Backpressure"><strong><code>onBackpressureDrop( )</code></strong></a> — drop emissions from the source Observable unless there is a pending request from a downstream Subscriber, in which case emit enough items to fulfill the request</p></li>
+<li><p><a href="Phantom-Operators#onerrorflatmap"><strong><code>onErrorFlatMap( )</code></strong></a> — instructs an Observable to emit a sequence of items whenever it encounters an error (⁇)</p></li>
+<li><p><a href="Error-Handling-Operators#onerrorresumenext"><strong><code>onErrorResumeNext( )</code></strong></a> — instructs an Observable to emit a sequence of items if it encounters an error</p></li>
+<li><p><a href="Error-Handling-Operators#onerrorreturn"><strong><code>onErrorReturn( )</code></strong></a> — instructs an Observable to emit a particular item when it encounters an error</p></li>
+<li><p><a href="Error-Handling-Operators#onexceptionresumenext"><strong><code>onExceptionResumeNext( )</code></strong></a> — instructs an Observable to continue emitting items after it encounters an exception (but not another variety of throwable)</p></li>
+<li><p><strong><code>orElse( )</code></strong> (scala) — <em>see <a href="Conditional-and-Boolean-Operators#defaultifempty"><strong><code>defaultIfEmpty( )</code></strong></a></em></p></li>
+<li><p><a href="Phantom-Operators#parallel"><strong><code>parallel( )</code></strong></a> — split the work done on the emissions from an Observable into multiple Observables each operating on its own parallel thread (⁇)</p></li>
+<li><p><a href="Phantom-Operators#parallelmerge"><strong><code>parallelMerge( )</code></strong></a> — combine multiple Observables into smaller number of Observables (⁇)</p></li>
+<li><p><a href="Phantom-Operators#pivot"><strong><code>pivot( )</code></strong></a> — combine multiple sets of grouped observables so that they are arranged primarily by group rather than by set (⁇)</p></li>
+<li><p><a href="Connectable-Observable-Operators#observablepublish"><strong><code>publish( )</code></strong></a> — represents an Observable as a Connectable Observable</p></li>
+<li><p><a href="Phantom-Operators#publishlast"><strong><code>publishLast( )</code></strong></a> — represent an Observable as a Connectable Observable that emits only the last item emitted by the source Observable (⁇)</p></li>
+<li><p><a href="Creating-Observables#range"><strong><code>range( )</code></strong></a> — create an Observable that emits a range of sequential integers</p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#reduce"><strong><code>reduce( )</code></strong></a> — apply a function to each emitted item, sequentially, and emit only the final accumulated value</p></li>
+<li><p><strong><code>reductions( )</code></strong> (clojure) — <em>see <a href="Transforming-Observables#scan"><strong><code>scan( )</code></strong></a></em></p></li>
+<li><p><a href="Connectable-Observable-Operators#connectableobservablerefcount"><strong><code>refCount( )</code></strong></a> — makes a Connectable Observable behave like an ordinary Observable</p></li>
+<li><p><a href="Creating-Observables#repeat"><strong><code>repeat( )</code></strong></a> — create an Observable that emits a particular item or sequence of items repeatedly</p></li>
+<li><p><a href="Creating-Observables#repeatwhen"><strong><code>repeatWhen( )</code></strong></a> — create an Observable that emits a particular item or sequence of items repeatedly, depending on the emissions of a second Observable</p></li>
+<li><p><a href="Connectable-Observable-Operators#observablereplay"><strong><code>replay( )</code></strong></a> — ensures that all Subscribers see the same sequence of emitted items, even if they subscribe after the Observable begins emitting the items</p></li>
+<li><p><strong><code>rest( )</code></strong> (clojure) — <em>see <a href="Blocking-Observable-Operators#next"><strong><code>next( )</code></strong></a></em></p></li>
+<li><p><strong><code>return( )</code></strong> (clojure) — <em>see <a href="Creating-Observables#just"><strong><code>just( )</code></strong></a></em></p></li>
+<li><p><a href="Error-Handling-Operators#retry"><strong><code>retry( )</code></strong></a> — if a source Observable emits an error, resubscribe to it in the hopes that it will complete without error</p></li>
+<li><p><a href="Error-Handling-Operators#retrywhen"><strong><code>retrywhen( )</code></strong></a> — if a source Observable emits an error, pass that error to another Observable to determine whether to resubscribe to the source</p></li>
+<li><p><a href="Async-Operators#runasync"><strong><code>runAsync( )</code></strong></a> — returns a <code>StoppableObservable</code> that emits multiple actions as generated by a specified Action on a Scheduler (<code>rxjava-async</code>)</p></li>
+<li><p><a href="Filtering-Observables#sample-or-throttlelast"><strong><code>sample( )</code></strong></a> — emit the most recent items emitted by an Observable within periodic time intervals</p></li>
+<li><p><a href="Transforming-Observables#scan"><strong><code>scan( )</code></strong></a> — apply a function to each item emitted by an Observable, sequentially, and emit each successive value</p></li>
+<li><p><strong><code>seq( )</code></strong> (clojure) — <em>see <a href="Blocking-Observable-Operators#transformations-tofuture-toiterable-and-getiterator"><strong><code>getIterator( )</code></strong></a></em></p></li>
+<li><p><a href="Conditional-and-Boolean-Operators#sequenceequal"><strong><code>sequenceEqual( )</code></strong></a> — test the equality of sequences emitted by two Observables</p></li>
+<li><p><strong><code>sequenceEqualWith( )</code></strong> (scala) — <em>instance version of <a href="Conditional-and-Boolean-Operators#sequenceequal"><strong><code>sequenceEqual( )</code></strong></a></em></p></li>
+<li><p><a href="Observable-Utility-Operators#serialize"><strong><code>serialize( )</code></strong></a> — force an Observable to make serialized calls and to be well-behaved</p></li>
+<li><p><strong><code>share( )</code></strong> — <em>see <a href="Connectable-Observable-Operators#connectableobservablerefcount"><strong><code>refCount( )</code></strong></a></em></p></li>
+<li><p><a href="Blocking-Observable-Operators#single-and-singleordefault"><strong><code>single( )</code></strong></a> (<code>BlockingObservable</code>) — if the source Observable completes after emitting a single item, return that item, otherwise throw an exception</p></li>
+<li><p><a href="Observable-Utility-Operators#single-and-singleordefault"><strong><code>single( )</code></strong></a> (<code>Observable</code>) — if the source Observable completes after emitting a single item, emit that item, otherwise notify of an exception</p></li>
+<li><p><strong><code>singleOption( )</code></strong> (scala) — <em>see <a href="Blocking-Observable-Operators#single-and-singleordefault"><strong><code>singleOrDefault( )</code></strong></a> (<code>BlockingObservable</code>)</em></p></li>
+<li><p><a href="Blocking-Observable-Operators#single-and-singleordefault"><strong><code>singleOrDefault( )</code></strong></a> (<code>BlockingObservable</code>) — if the source Observable completes after emitting a single item, return that item, otherwise return a default item</p></li>
+<li><p><a href="Observable-Utility-Operators#single-and-singleordefault"><strong><code>singleOrDefault( )</code></strong></a> (<code>Observable</code>) — if the source Observable completes after emitting a single item, emit that item, otherwise emit a default item</p></li>
+<li><p><strong><code>singleOrElse( )</code></strong> (scala) — <em>see <a href="Observable-Utility-Operators#single-and-singleordefault"><strong><code>singleOrDefault( )</code></strong></a></em></p></li>
+<li><p><strong><code>size( )</code></strong> (scala) — <em>see <a href="Mathematical-and-Aggregate-Operators#count-and-countlong"><strong><code>count( )</code></strong></a></em></p></li>
+<li><p><a href="Filtering-Observables#skip"><strong><code>skip( )</code></strong></a> — ignore the first <em>n</em> items emitted by an Observable</p></li>
+<li><p><a href="Filtering-Observables#skiplast"><strong><code>skipLast( )</code></strong></a> — ignore the last <em>n</em> items emitted by an Observable</p></li>
+<li><p><a href="Conditional-and-Boolean-Operators#skipuntil"><strong><code>skipUntil( )</code></strong></a> — discard items emitted by a source Observable until a second Observable emits an item, then emit the remainder of the source Observable&#39;s items</p></li>
+<li><p><a href="Conditional-and-Boolean-Operators#skipwhile"><strong><code>skipWhile( )</code></strong></a> — discard items emitted by an Observable until a specified condition is false, then emit the remainder</p></li>
+<li><p><strong><code>sliding( )</code></strong> (scala) — <em>see <a href="Transforming-Observables#window"><strong><code>window( )</code></strong></a></em></p></li>
+<li><p><strong><code>slidingBuffer( )</code></strong> (scala) — <em>see <a href="Transforming-Observables#buffer"><strong><code>buffer( )</code></strong></a></em></p></li>
+<li><p><a href="String-Observables#split"><strong><code>split( )</code></strong></a> (<code>StringObservable</code>) — converts an Observable of Strings into an Observable of Strings that treats the source sequence as a stream and splits it on a specified regex boundary</p></li>
+<li><p><a href="Async-Operators#start"><strong><code>start( )</code></strong></a> — create an Observable that emits the return value of a function (<code>rxjava-async</code>)</p></li>
+<li><p><a href="Phantom-Operators#fromcancellablefuture-startcancellablefuture-and-defercancellablefuture-"><strong><code>startCancellableFuture( )</code></strong></a> — convert a function that returns Future into an Observable that emits that Future&#39;s return value in a way that monitors the subscription status of the Observable to determine whether to halt work on the Future (⁇)(<code>rxjava-async</code>)</p></li>
+<li><p><a href="Async-Operators#startfuture"><strong><code>startFuture( )</code></strong></a> — convert a function that returns Future into an Observable that emits that Future&#39;s return value (<code>rxjava-async</code>)</p></li>
+<li><p><a href="Combining-Observables#startwith"><strong><code>startWith( )</code></strong></a> — emit a specified sequence of items before beginning to emit the items from the Observable</p></li>
+<li><p><a href="String-Observables#stringconcat"><strong><code>stringConcat( )</code></strong></a> (<code>StringObservable</code>) — converts an Observable that emits a sequence of strings into an Observable that emits a single string that concatenates them all</p></li>
+<li><p><a href="Observable-Utility-Operators#subscribeon"><strong><code>subscribeOn( )</code></strong></a> — specify which Scheduler an Observable should use when its subscription is invoked</p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#suminteger-sumlong-sumfloat-and-sumdouble"><strong><code>sumDouble( )</code></strong></a> — adds the Doubles emitted by an Observable and emits this sum (<code>rxjava-math</code>)</p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#suminteger-sumlong-sumfloat-and-sumdouble"><strong><code>sumFloat( )</code></strong></a> — adds the Floats emitted by an Observable and emits this sum (<code>rxjava-math</code>)</p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#suminteger-sumlong-sumfloat-and-sumdouble"><strong><code>sumInteger( )</code></strong></a> — adds the Integers emitted by an Observable and emits this sum (<code>rxjava-math</code>)</p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#suminteger-sumlong-sumfloat-and-sumdouble"><strong><code>sumLong( )</code></strong></a> — adds the Longs emitted by an Observable and emits this sum (<code>rxjava-math</code>)</p></li>
+<li><p><strong><code>switch( )</code></strong> (scala) — <em>see <a href="Combining-Observables#switchonnext"><strong><code>switchOnNext( )</code></strong></a></em></p></li>
+<li><p><a href="Conditional-and-Boolean-Operators#switchcase"><strong><code>switchCase( )</code></strong></a> — emit the sequence from a particular Observable based on the results of an evaluation (<code>contrib-computation-expressions</code>)</p></li>
+<li><p><a href="Transforming-Observables#switchmap"><strong><code>switchMap( )</code></strong></a> — transform the items emitted by an Observable into Observables, and mirror those items emitted by the most-recently transformed Observable</p></li>
+<li><p><a href="Combining-Observables#switchonnext"><strong><code>switchOnNext( )</code></strong></a> — convert an Observable that emits Observables into a single Observable that emits the items emitted by the most-recently emitted of those Observables</p></li>
+<li><p><strong><code>synchronize( )</code></strong> — <em>see <a href="Observable-Utility-Operators#serialize"><strong><code>serialize( )</code></strong></a></em></p></li>
+<li><p><a href="Filtering-Observables#take"><strong><code>take( )</code></strong></a> — emit only the first <em>n</em> items emitted by an Observable</p></li>
+<li><p><a href="Filtering-Observables#first-and-takefirst"><strong><code>takeFirst( )</code></strong></a> — emit only the first item emitted by an Observable, or the first item that meets some condition</p></li>
+<li><p><a href="Filtering-Observables#takelast"><strong><code>takeLast( )</code></strong></a> — only emit the last <em>n</em> items emitted by an Observable</p></li>
+<li><p><a href="Filtering-Observables#takelastbuffer"><strong><code>takeLastBuffer( )</code></strong></a> — emit the last <em>n</em> items emitted by an Observable, as a single list item</p></li>
+<li><p><strong><code>takeRight( )</code></strong> (scala) — <em>see <a href="Filtering-Observables#last"><strong><code>last( )</code></strong></a> (<code>Observable</code>) or <a href="Filtering-Observables#takelast"><strong><code>takeLast( )</code></strong></a></em></p></li>
+<li><p><a href="Conditional-and-Boolean-Operators#takeuntil"><strong><code>takeUntil( )</code></strong></a> — emits the items from the source Observable until a second Observable emits an item</p></li>
+<li><p><a href="Conditional-and-Boolean-Operators#takewhile"><strong><code>takeWhile( )</code></strong></a> — emit items emitted by an Observable as long as a specified condition is true, then skip the remainder</p></li>
+<li><p><strong><code>take-while( )</code></strong> (clojure) — <em>see <a href="Conditional-and-Boolean-Operators#takewhile"><strong><code>takeWhile( )</code></strong></a></em></p></li>
+<li><p><a href="Combining-Observables#and-then-and-when"><strong><code>then( )</code></strong></a> — transform a series of <code>Pattern</code> objects via a <code>Plan</code> template (<code>rxjava-joins</code>)</p></li>
+<li><p><a href="Filtering-Observables#throttlefirst"><strong><code>throttleFirst( )</code></strong></a> — emit the first items emitted by an Observable within periodic time intervals</p></li>
+<li><p><a href="Filtering-Observables#sample-or-throttlelast"><strong><code>throttleLast( )</code></strong></a> — emit the most recent items emitted by an Observable within periodic time intervals</p></li>
+<li><p><a href="Filtering-Observables#throttlewithtimeout-or-debounce"><strong><code>throttleWithTimeout( )</code></strong></a> — only emit an item from the source Observable after a particular timespan has passed without the Observable emitting any other items</p></li>
+<li><p><strong><code>throw( )</code></strong> (clojure) — <em>see <a href="Creating-Observables#empty-error-and-never"><strong><code>error( )</code></strong></a></em></p></li>
+<li><p><a href="Observable-Utility-Operators#timeinterval"><strong><code>timeInterval( )</code></strong></a> — emit the time lapsed between consecutive emissions of a source Observable</p></li>
+<li><p><a href="Filtering-Observables#timeout"><strong><code>timeout( )</code></strong></a> — emit items from a source Observable, but issue an exception if no item is emitted in a specified timespan</p></li>
+<li><p><a href="Creating-Observables#timer"><strong><code>timer( )</code></strong></a> — create an Observable that emits a single item after a given delay</p></li>
+<li><p><a href="Observable-Utility-Operators#timestamp"><strong><code>timestamp( )</code></strong></a> — attach a timestamp to every item emitted by an Observable</p></li>
+<li><p><a href="Async-Operators#toasync-or-asyncaction-or-asyncfunc"><strong><code>toAsync( )</code></strong></a> — convert a function or Action into an Observable that executes the function and emits its return value (<code>rxjava-async</code>)</p></li>
+<li><p><a href="Blocking-Observable-Operators"><strong><code>toBlocking( )</code></strong></a> — transform an Observable into a BlockingObservable</p></li>
+<li><p><strong><code>toBlockingObservable( )</code></strong> - <em>see <a href="Blocking-Observable-Operators"><strong><code>toBlocking( )</code></strong></a></em></p></li>
+<li><p><a href="Blocking-Observable-Operators#transformations-tofuture-toiterable-and-getiterator"><strong><code>toFuture( )</code></strong></a> — convert the Observable into a Future</p></li>
+<li><p><a href="Blocking-Observable-Operators#transformations-tofuture-toiterable-and-getiterator"><strong><code>toIterable( )</code></strong></a> — convert the sequence emitted by the Observable into an Iterable</p></li>
+<li><p><strong><code>toIterator( )</code></strong> — <em>see <a href="Blocking-Observable-Operators#transformations-tofuture-toiterable-and-getiterator"><strong><code>getIterator( )</code></strong></a></em></p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#tolist"><strong><code>toList( )</code></strong></a> — collect all items from an Observable and emit them as a single List</p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#tomap-and-tomultimap"><strong><code>toMap( )</code></strong></a> — convert the sequence of items emitted by an Observable into a map keyed by a specified key function</p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#tomap-and-tomultimap"><strong><code>toMultimap( )</code></strong></a> — convert the sequence of items emitted by an Observable into an ArrayList that is also a map keyed by a specified key function</p></li>
+<li><p><strong><code>toSeq( )</code></strong> (scala) — <em>see <a href="Mathematical-and-Aggregate-Operators#tolist"><strong><code>toList( )</code></strong></a></em></p></li>
+<li><p><a href="Mathematical-and-Aggregate-Operators#tosortedlist"><strong><code>toSortedList( )</code></strong></a> — collect all items from an Observable and emit them as a single, sorted List</p></li>
+<li><p><strong><code>tumbling( )</code></strong> (scala) — <em>see <a href="Transforming-Observables#window"><strong><code>window( )</code></strong></a></em></p></li>
+<li><p><strong><code>tumblingBuffer( )</code></strong> (scala) — <em>see <a href="Transforming-Observables#buffer"><strong><code>buffer( )</code></strong></a></em></p></li>
+<li><p><a href="Observable-Utility-Operators#using"><strong><code>using( )</code></strong></a> — create a disposable resource that has the same lifespan as an Observable</p></li>
+<li><p><a href="Combining-Observables#and-then-and-when"><strong><code>when( )</code></strong></a> — convert a series of <code>Plan</code> objects into an Observable (<code>rxjava-joins</code>)</p></li>
+<li><p><strong><code>where( )</code></strong> — <em>see: <a href="Filtering-Observables#filter"><strong><code>filter( )</code></strong></a></em></p></li>
+<li><p><a href="Conditional-and-Boolean-Operators#whiledo"><strong><code>whileDo( )</code></strong></a> — if a condition is true, emit the source Observable&#39;s sequence and then repeat the sequence as long as the condition remains true (<code>contrib-computation-expressions</code>)</p></li>
+<li><p><a href="Transforming-Observables#window"><strong><code>window( )</code></strong></a> — periodically subdivide items from an Observable into Observable windows and emit these windows rather than emitting the items one at a time</p></li>
+<li><p><a href="Combining-Observables#zip"><strong><code>zip( )</code></strong></a> — combine sets of items emitted by two or more Observables together via a specified function and emit items based on the results of this function</p></li>
+<li><p><strong><code>zipWith( )</code></strong> — <em>instance version of <a href="Combining-Observables#zip"><strong><code>zip( )</code></strong></a></em></p></li>
+<li><p><strong><code>zipWithIndex( )</code></strong> (scala) — <em>see <a href="Combining-Observables#zip"><strong><code>zip( )</code></strong></a></em></p></li>
+<li><p><strong><code>++</code></strong> (scala) — <em>see <a href="Mathematical-and-Aggregate-Operators#concat"><strong><code>concat( )</code></strong></a></em></p></li>
+<li><p><strong><code>+:</code></strong> (scala) — <em>see <a href="Combining-Observables#startwith"><strong><code>startWith( )</code></strong></a></em></p></li>
+</ul>
+<p><p>(⁇) — this proposed operator is not part of RxJava 1.0</p></p>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+</body>
+</html>

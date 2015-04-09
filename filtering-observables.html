@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>RxJava</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="stylesheets/base.css">
+    <link rel="stylesheet" href="stylesheets/skeleton.css">
+    <link rel="stylesheet" href="stylesheets/layout.css">
+    <link rel="stylesheet" href="stylesheets/docs.css">
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+</head>
+<body>
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+            <h3 id="logo"><a href="/">RxJava</a></h3>
+                <ul id="navi">
+                    
+                </ul>
+            </nav>
+        </div>
+        <div class="twelve columns offset-by-three content">
+            <header>
+                <h1><a href="/">RxJava</a></h1>
+                <div id="social">
+                    <a href="http://twitter.com/share" class="twitter-share-button" data-text="RxJava" data-count="horizontal">Tweet</a>
+                    <a href="http://yongjhih.github.io/RxJava/Filtering-Observables/_edit" class="button">Edit</a>
+                </div>
+            </header>
+            <div>
+                <p><p>This page shows operators you can use to filter and select items emitted by Observables.</p></p>
+<ul>
+<li><p><a href="http://reactivex.io/documentation/operators/filter.html"><strong><code>filter( )</code></strong></a> — filter items emitted by an Observable</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/takelast.html"><strong><code>takeLast( )</code></strong></a> — only emit the last <em>n</em> items emitted by an Observable</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/last.html"><strong><code>last( )</code></strong></a> — emit only the last item emitted by an Observable</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/last.html"><strong><code>lastOrDefault( )</code></strong></a> — emit only the last item emitted by an Observable, or a default value if the source Observable is empty</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/takelast.html"><strong><code>takeLastBuffer( )</code></strong></a> — emit the last <em>n</em> items emitted by an Observable, as a single list item</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/skip.html"><strong><code>skip( )</code></strong></a> — ignore the first <em>n</em> items emitted by an Observable</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/skiplast.html"><strong><code>skipLast( )</code></strong></a> — ignore the last <em>n</em> items emitted by an Observable</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/take.html"><strong><code>take( )</code></strong></a> — emit only the first <em>n</em> items emitted by an Observable</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/first.html"><strong><code>first( )</code> and <code>takeFirst( )</code></strong></a> — emit only the first item emitted by an Observable, or the first item that meets some condition</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/first.html"><strong><code>firstOrDefault( )</code></strong></a> — emit only the first item emitted by an Observable, or the first item that meets some condition, or a default value if the source Observable is empty</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/elementat.html"><strong><code>elementAt( )</code></strong></a> — emit item <em>n</em> emitted by the source Observable</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/elementat.html"><strong><code>elementAtOrDefault( )</code></strong></a> — emit item <em>n</em> emitted by the source Observable, or a default item if the source Observable emits fewer than <em>n</em> items</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/sample.html"><strong><code>sample( )</code> or <code>throttleLast( )</code></strong></a> — emit the most recent items emitted by an Observable within periodic time intervals</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/sample.html"><strong><code>throttleFirst( )</code></strong></a> — emit the first items emitted by an Observable within periodic time intervals</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/debounce.html"><strong><code>throttleWithTimeout( )</code> or <code>debounce( )</code></strong></a> — only emit an item from the source Observable after a particular timespan has passed without the Observable emitting any other items</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/timeout.html"><strong><code>timeout( )</code></strong></a> — emit items from a source Observable, but issue an exception if no item is emitted in a specified timespan</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/distinct.html"><strong><code>distinct( )</code></strong></a> — suppress duplicate items emitted by the source Observable</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/distinct.html"><strong><code>distinctUntilChanged( )</code></strong></a> — suppress duplicate consecutive items emitted by the source Observable</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/filter.html"><strong><code>ofType( )</code></strong></a> — emit only those items from the source Observable that are of a particular class</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/ignoreelements.html"><strong><code>ignoreElements( )</code></strong></a> — discard the items emitted by the source Observable and only pass through the error or completed notification</p></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+</body>
+</html>

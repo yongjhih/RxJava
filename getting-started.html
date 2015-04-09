@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>RxJava</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="stylesheets/base.css">
+    <link rel="stylesheet" href="stylesheets/skeleton.css">
+    <link rel="stylesheet" href="stylesheets/layout.css">
+    <link rel="stylesheet" href="stylesheets/docs.css">
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+</head>
+<body>
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+            <h3 id="logo"><a href="/">RxJava</a></h3>
+                <ul id="navi">
+                    
+                        <li><a href="#getting_binaries">Getting Binaries</a></li>
+                    
+                        <li><a href="#building">Building</a></li>
+                    
+                        <li><a href="#troubleshooting">Troubleshooting</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+        <div class="twelve columns offset-by-three content">
+            <header>
+                <h1><a href="/">RxJava</a></h1>
+                <div id="social">
+                    <a href="http://twitter.com/share" class="twitter-share-button" data-text="RxJava" data-count="horizontal">Tweet</a>
+                    <a href="http://yongjhih.github.io/RxJava/Getting-Started/_edit" class="button">Edit</a>
+                </div>
+            </header>
+            <div>
+                <h2 id="getting_binaries">Getting Binaries</h2><p><p>You can find binaries and dependency information for Maven, Ivy, Gradle, SBT, and others at <a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22io.reactivex%22%20AND%20a%3A%22rxjava%22">http://search.maven.org</a>.</p>
+<p>Example for Maven:</p></p>
+<pre><code class="lang-xml"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>io.reactivex<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>rxjava<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.0.0<span class="tag">&lt;/<span class="title">version</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">dependency</span>&gt;</span>
+</code></pre>
+<p><p>and for Ivy:</p></p>
+<pre><code class="lang-xml"><span class="tag">&lt;<span class="title">dependency</span> <span class="attribute">org</span>=<span class="value">"io.reactivex"</span> <span class="attribute">name</span>=<span class="value">"rxjava"</span> <span class="attribute">rev</span>=<span class="value">"1.0.0"</span> /&gt;</span>
+</code></pre>
+<p><p>and for SBT:</p></p>
+<pre><code class="lang-scala"><span class="comment">libraryDependencies</span> <span class="literal">+</span><span class="comment">=</span> <span class="comment">"com</span><span class="string">.</span><span class="comment">netflix</span><span class="string">.</span><span class="comment">rxjava"</span> <span class="comment">%</span> <span class="comment">"rxjava</span><span class="literal">-</span><span class="comment">scala"</span> <span class="comment">%</span> <span class="comment">"1</span><span class="string">.</span><span class="comment">0</span><span class="string">.</span><span class="comment">0"</span>
+</code></pre>
+<p><p>and for Gradle:</p></p>
+<pre><code class="lang-groovy"><span class="title">compile</span> 'io.reactivex:rxjava:<span class="number">1.0</span><span class="number">.0</span>'
+</code></pre>
+<p><p>If you need to download the jars instead of using a build system, create a Maven <code>pom</code> file like this with the desired version:</p></p>
+<pre><code class="lang-xml"><span class="pi">&lt;?xml version="1.0"?&gt;</span>
+<span class="tag">&lt;<span class="title">project</span> <span class="attribute">xmlns</span>=<span class="value">"http://maven.apache.org/POM/4.0.0"</span> <span class="attribute">xmlns:xsi</span>=<span class="value">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="attribute">xsi:schemaLocation</span>=<span class="value">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="title">modelVersion</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>com.netflix.rxjava.download<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>rxjava-download<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="title">version</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">name</span>&gt;</span>Simple POM to download rxjava and dependencies<span class="tag">&lt;/<span class="title">name</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">url</span>&gt;</span>http://github.com/ReactiveX/RxJava<span class="tag">&lt;/<span class="title">url</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">dependencies</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">dependency</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>io.reactivex<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>rxjava<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.0.0<span class="tag">&lt;/<span class="title">version</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">scope</span>/&gt;</span>
+        <span class="tag">&lt;/<span class="title">dependency</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">dependencies</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">project</span>&gt;</span>
+</code></pre>
+<p><p>Then execute:</p></p>
+<pre><code>$ mvn <span class="attribute">-f</span> download<span class="attribute">-rxjava</span><span class="attribute">-pom</span><span class="built_in">.</span><span class="built_in">xml</span> dependency:copy<span class="attribute">-dependencies</span>
+</code></pre><p><p>That command downloads <code>rxjava-*.jar</code> and its dependencies into <code>./target/dependency/</code>.</p>
+<p>You need Java 6 or later.</p></p>
+<h2 id="building">Building</h2><p><p>To check out and build the RxJava source, issue the following commands:</p></p>
+<pre><code><span class="variable">$ </span>git clone git<span class="variable">@github</span>.<span class="symbol">com:</span><span class="constant">ReactiveX</span>/<span class="constant">RxJava</span>.git
+<span class="variable">$ </span>cd <span class="constant">RxJava</span>/
+<span class="variable">$ </span>.<span class="regexp">/gradlew build</span>
+</code></pre><p><p>To do a clean build, issue the following command:</p></p>
+<pre><code><span class="variable">$ </span>.<span class="regexp">/gradlew clean build</span>
+</code></pre><p><p>A build should look similar to this:</p></p>
+<pre><code>$ ./gradlew build
+<span class="attribute">:rxjava:compileJava</span>
+<span class="attribute">:rxjava:processResources</span> UP-TO-DATE
+<span class="attribute">:rxjava:classes</span>
+<span class="attribute">:rxjava:jar</span>
+<span class="attribute">:rxjava:sourcesJar</span>
+<span class="attribute">:rxjava:signArchives</span> SKIPPED
+<span class="attribute">:rxjava:assemble</span>
+<span class="attribute">:rxjava:licenseMain</span> UP-TO-DATE
+<span class="attribute">:rxjava:licenseTest</span> UP-TO-DATE
+<span class="attribute">:rxjava:compileTestJava</span>
+<span class="attribute">:rxjava:processTestResources</span> UP-TO-DATE
+<span class="attribute">:rxjava:testClasses</span>
+<span class="attribute">:rxjava:test</span>
+<span class="attribute">:rxjava:check</span>
+<span class="attribute">:rxjava:build</span>
+
+BUILD SUCCESSFUL
+
+Total time: 30.758 secs
+</code></pre><p><p>On a clean build you will see the unit tests run. They will look something like this:</p></p>
+<pre><code>&gt; <span class="constant">Building</span> &gt; <span class="symbol">:rxjava</span><span class="symbol">:test</span> &gt; <span class="number">91</span> tests completed
+</code></pre><h4 id="troubleshooting">Troubleshooting</h4><p><p>One developer reported getting the following error:</p></p>
+<blockquote>
+<p><p>Could not resolve all dependencies for configuration &#39;:language-adaptors:rxjava-scala:provided&#39;</p></p>
+</blockquote>
+<p><p>He was able to resolve the problem by removing old versions of <code>scala-library</code> from <code>.gradle/caches</code> and <code>.m2/repository/org/scala-lang/</code> and then doing a clean build. <a href="https://gist.github.com/jaceklaskowski/9496058">(See this page for details.)</a></p>
+<p>You may get the following error during building RxJava:</p></p>
+<blockquote>
+<p><p>Failed to apply plugin [id &#39;java&#39;]</p><p>Could not generate a proxy class for class nebula.core.NamedContainerProperOrder.</p></p>
+</blockquote>
+<p><p>It&#39;s a JVM issue, see <a href="https://jira.codehaus.org/browse/GROOVY-6951">GROOVY-6951</a> for details. If so, you can run <code>export GRADLE_OPTS=-noverify</code> before building RxJava, or update your JDK.</p></p>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+</body>
+</html>

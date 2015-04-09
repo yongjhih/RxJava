@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>RxJava</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="stylesheets/base.css">
+    <link rel="stylesheet" href="stylesheets/skeleton.css">
+    <link rel="stylesheet" href="stylesheets/layout.css">
+    <link rel="stylesheet" href="stylesheets/docs.css">
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+</head>
+<body>
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+            <h3 id="logo"><a href="/">RxJava</a></h3>
+                <ul id="navi">
+                    
+                        <li><a href="#conditional_operators">Conditional Operators</a></li>
+                    
+                        <li><a href="#boolean_operators">Boolean Operators</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+        <div class="twelve columns offset-by-three content">
+            <header>
+                <h1><a href="/">RxJava</a></h1>
+                <div id="social">
+                    <a href="http://twitter.com/share" class="twitter-share-button" data-text="RxJava" data-count="horizontal">Tweet</a>
+                    <a href="http://yongjhih.github.io/RxJava/Conditional-and-Boolean-Operators/_edit" class="button">Edit</a>
+                </div>
+            </header>
+            <div>
+                <p><p>This section explains operators with which you conditionally emit or transform Observables, or can do boolean evaluations of them:</p></p>
+<h3 id="conditional_operators">Conditional Operators</h3><ul>
+<li><p><a href="http://reactivex.io/documentation/operators/amb.html"><strong><code>amb( )</code></strong></a> — given two or more source Observables, emits all of the items from the first of these Observables to emit an item</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/defaultifempty.html"><strong><code>defaultIfEmpty( )</code></strong></a> — emit items from the source Observable, or emit a default item if the source Observable completes after emitting no items</p></li>
+<li><p>(<code>rxjava-computation-expressions</code>) <a href="http://reactivex.io/documentation/operators/repeat.html"><strong><code>doWhile( )</code></strong></a> — emit the source Observable&#39;s sequence, and then repeat the sequence as long as a condition remains true</p></li>
+<li><p>(<code>rxjava-computation-expressions</code>) <a href="http://reactivex.io/documentation/operators/defer.html"><strong><code>ifThen( )</code></strong></a> — only emit the source Observable&#39;s sequence if a condition is true, otherwise emit an empty or default sequence</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/skipuntil.html"><strong><code>skipUntil( )</code></strong></a> — discard items emitted by a source Observable until a second Observable emits an item, then emit the remainder of the source Observable&#39;s items</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/skipwhile.html"><strong><code>skipWhile( )</code></strong></a> — discard items emitted by an Observable until a specified condition is false, then emit the remainder</p></li>
+<li><p>(<code>rxjava-computation-expressions</code>) <a href="http://reactivex.io/documentation/operators/defer.html"><strong><code>switchCase( )</code></strong></a> — emit the sequence from a particular Observable based on the results of an evaluation</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/takeuntil.html"><strong><code>takeUntil( )</code></strong></a> — emits the items from the source Observable until a second Observable emits an item or issues a notification</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/takewhile.html"><strong><code>takeWhile( )</code> and <code>takeWhileWithIndex( )</code></strong></a> — emit items emitted by an Observable as long as a specified condition is true, then skip the remainder</p></li>
+<li><p>(<code>rxjava-computation-expressions</code>) <a href="http://reactivex.io/documentation/operators/repeat.html"><strong><code>whileDo( )</code></strong></a> — if a condition is true, emit the source Observable&#39;s sequence and then repeat the sequence as long as the condition remains true</p></li>
+</ul>
+<blockquote>
+<p><p>(<code>rxjava-computation-expressions</code>) — indicates that this operator is currently part of the optional <code>rxjava-computation-expressions</code> package under <code>rxjava-contrib</code> and is not included with the standard RxJava set of operators</p></p>
+</blockquote>
+<h3 id="boolean_operators">Boolean Operators</h3><ul>
+<li><p><a href="http://reactivex.io/documentation/operators/all.html"><strong><code>all( )</code></strong></a> — determine whether all items emitted by an Observable meet some criteria</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/contains.html"><strong><code>contains( )</code></strong></a> — determine whether an Observable emits a particular item or not</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/contains.html"><strong><code>exists( )</code> and <code>isEmpty( )</code></strong></a> — determine whether an Observable emits any items or not</p></li>
+<li><p><a href="http://reactivex.io/documentation/operators/sequenceequal.html"><strong><code>sequenceEqual( )</code></strong></a> — test the equality of the sequences emitted by two Observables</p></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+</body>
+</html>
